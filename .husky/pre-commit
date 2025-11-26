@@ -1,0 +1,20 @@
+#!/bin/sh
+
+# Cargar NVM (necesario en entornos donde Husky no hereda el PATH completo)
+export NVM_DIR="$HOME/.nvm"
+# Esto carga nvm
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+# Esto carga nvm para bash >=0.4.0
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+
+echo "🔍 Verificando archivos antes del commit..."
+echo "📦 Formateando código con Biome..."
+
+pnpm exec biome format --write . || exit 1
+
+
+# Agregar los archivos modificados después del formateo
+git add .
+
+
+echo "✅ Todo listo para el commit. 🎉"

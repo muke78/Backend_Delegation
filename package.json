@@ -1,0 +1,55 @@
+{
+	"name": "backend_delegation",
+	"version": "0.0.1",
+	"description": "Backend specializes in creating indexes for reference searches in a branch office",
+	"main": "server.js",
+	"type": "module",
+	"scripts": {
+		"start": "node server.js",
+		"dev": "nodemon server.js",
+		"format": "pnpm exec biome format --write .",
+		"lint": "pnpm exec biome lint --write .",
+		"check:biome": "pnpm exec biome check --write .",
+		"prepare": "husky"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/muke78/Backend_Delegation"
+	},
+	"keywords": [
+		"node",
+		"express",
+		"api",
+		"backend",
+		"mysql",
+		"swagger"
+	],
+	"engines": {
+		"node": ">=v22.11.0"
+	},
+	"author": "Khelde muke78 muke7881@gmail.com",
+	"license": "ISC",
+	"packageManager": "pnpm@10.19.0",
+	"dependencies": {
+		"argon2": "0.44.0",
+		"cookie-parser": "1.4.7",
+		"cors": "2.8.5",
+		"express": "5.1.0",
+		"express-rate-limit": "8.2.1",
+		"helmet": "8.1.0",
+		"husky": "9.1.7",
+		"joi": "18.0.2",
+		"jsonwebtoken": "9.0.2",
+		"morgan": "1.10.1",
+		"mysql2": "3.15.3",
+		"swagger-themes": "1.4.3",
+		"swagger-ui-express": "5.0.1",
+		"winston": "3.18.3",
+		"yamljs": "0.3.0"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^2.3.7",
+		"dotenv": "17.2.3",
+		"nodemon": "3.1.11"
+	}
+}
