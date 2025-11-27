@@ -1,7 +1,4 @@
-import {
-	loginService,
-	registerUserService,
-} from "../../services/auth/index.js";
+import { loginService, registerUserService } from "../../services/index.js";
 
 export const Login = (userData) => loginService(userData);
 

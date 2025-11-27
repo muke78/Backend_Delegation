@@ -1,6 +1,6 @@
 import { connectionQuery } from "../../helpers/index.js";
 
-export const registerUserModel = async (
+export const insertUserModel = async (
 	newUserId,
 	username,
 	password,
@@ -9,7 +9,7 @@ export const registerUserModel = async (
 	role,
 ) => {
 	const query = `INSERT INTO users (user_id, username, password_hash, full_name, email, role)
-                   VALUES (?, ?, ?, ?, ?, ?);`;
+                       VALUES (?, ?, ?, ?, ?, ?);`;
 
 	const params = [newUserId, username, password, full_name, email, role];
 	return await connectionQuery(query, params);

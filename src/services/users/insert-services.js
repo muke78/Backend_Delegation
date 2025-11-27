@@ -1,13 +1,11 @@
-import { ConflictError, DatabaseError } from "../../utils/error-utils.js";
-import { registerUserModel } from "../../models/index.js";
-
 import {
 	findUserEmailBasic,
 	generateUUID,
 	hashedPassword,
 } from "../../helpers/index.js";
+import { insertUserModel } from "../../models/index.js";
 
-export const registerUserService = async ({
+export const insertUserService = async ({
 	username,
 	password,
 	full_name,
@@ -17,13 +15,13 @@ export const registerUserService = async ({
 	const existingUser = await findUserEmailBasic(email);
 
 	if (existingUser)
-		throw new ConflictError("EL correo ya se encuentra registrado");
+		throw new ConflictError("El correo ya se encuentra registrado");
 
 	const hashPassword = await hashedPassword(password);
 
 	const newUserId = generateUUID();
 
-	const insertResult = await registerUserModel(
+	const insertResult = await insertUserModel(
 		newUserId,
 		username,
 		hashPassword,
