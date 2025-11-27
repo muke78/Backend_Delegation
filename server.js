@@ -4,13 +4,14 @@ import cors from "cors";
 import helmet from "helmet";
 import { router } from "./src/routes/index.js";
 import { config } from "./src/config/config.js";
-import { corsOptions } from "./src/middlewares/cors.middlewares.js";
-import { setupSwagger } from "./src/config/swagger.config.js";
-import { errorHandler } from "./src/middlewares/error.middlewares.js";
+import { corsOptions } from "./src/middlewares/cors-middlewares.js";
+import { setupSwagger } from "./src/config/swagger-config.js";
+import { errorHandler } from "./src/middlewares/error-middlewares.js";
 import {
 	burstProtectionLimiter,
 	normalLimiter,
-} from "./src/middlewares/limit.middlewares.js";
+} from "./src/middlewares/limit-middlewares.js";
+import cookieParser from "cookie-parser";
 
 // Puerto que se tiene que ocupar
 const port = config.port ?? 3000;
@@ -26,6 +27,7 @@ app.use(express.json({ limit: "1mb" }));
 app.use(express.urlencoded({ extended: true, limit: "1mb" }));
 app.use(morgan("combined"));
 app.use(helmet());
+app.use(cookieParser());
 
 // ✅ 3 Ruta raíz de entrada cuando entras al servidor local
 app.get("/", (_req, res) => {

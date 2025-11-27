@@ -1,5 +1,5 @@
 import { ipKeyGenerator, rateLimit } from "express-rate-limit";
-import { TooManyRequestsError } from "./../utils/error.utils.js";
+import { TooManyRequestsError } from "./../utils/error-utils.js";
 
 // Bloqueo burst - más restrictivo para prevenir spam
 export const burstProtectionLimiter = rateLimit({

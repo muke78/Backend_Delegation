@@ -1,12 +1,16 @@
 import Joi from "joi";
 import {
 	emailSchema,
+	nameUsers,
 	nameUserSchema,
 	passwordSchema,
-} from "../schemas/subSchemas.schemas.js";
+	roleSchema,
+} from "../schemas/sub-schemas.js";
 
 export const schemaRegisterUserValidations = Joi.object({
-	name_user: nameUserSchema,
-	email: emailSchema,
+	username: nameUserSchema,
 	password: passwordSchema,
+	full_name: nameUsers,
+	email: emailSchema,
+	role: roleSchema,
 });

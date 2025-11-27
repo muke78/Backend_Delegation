@@ -1,16 +1,15 @@
 import hashedArg from "argon2";
 
-import { lastLogin } from "../../helpers/last.login.helpers.js";
-import { createToken } from "../../helpers/jwt.helpers.js";
-import { AuthError, NotFoundError } from "../../utils/error.utils.js";
-import { findUserEmail } from "../../helpers/find.user.helpers.js";
+import { AuthError, NotFoundError } from "../../utils/error-utils.js";
+
+import { findUserAuth, createToken, lastLogin } from "../../helpers/index.js";
 
 export const loginService = async ({ email, password }) => {
-	const user = await findUserEmail(email);
+	const user = await findUserAuth(email);
 
 	if (!user) throw new NotFoundError("El usuario no ha podido ser encontrado");
 
-	const isPasswordValid = await hashedArg.verify(user.password, password);
+	const isPasswordValid = await hashedArg.verify(user.password_hash, password);
 
 	if (!isPasswordValid)
 		throw new AuthError("La contraseña es incorrecta o esta mal escrita");

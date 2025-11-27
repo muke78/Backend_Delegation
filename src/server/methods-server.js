@@ -1,5 +1,5 @@
 import crypto from "node:crypto";
-import { logger } from "../utils/logger.utils.js";
+import { logger } from "../utils/logger-utils.js";
 
 export const methodOK = (request, response, result, message) => {
 	const timestamp = new Date().toISOString();

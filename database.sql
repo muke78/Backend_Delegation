@@ -1,23 +1,27 @@
 -- tabla de usuarios
+
+DROP TABLE IF EXISTS users;
 CREATE TABLE users (
-    user_id CHAR(36) PRIMARY KEY DEFAULT(UUID()),
+    user_id CHAR(36) PRIMARY KEY,
     username VARCHAR(100) UNIQUE NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
     full_name VARCHAR(200),
     email VARCHAR(200) UNIQUE,
     role ENUM(
-        'admin',
-        'capturista',
-        'consulta'
-    ) DEFAULT 'consulta',
+        'Administrador',
+        'Capturista',
+        'Consultora'
+    ) DEFAULT 'Consultora',
     last_login DATETIME DEFAULT NULL,
     created DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 -- tabla principal: archives
+
+DROP TABLE IF EXISTS archives;
 CREATE TABLE archives (
-    archives_id CHAR(36) PRIMARY KEY DEFAULT(UUID()),
+    archives_id CHAR(36) PRIMARY KEY,
     folio VARCHAR(100) UNIQUE NOT NULL,
     name VARCHAR(255) NOT NULL,
     doc_type VARCHAR(100),
@@ -31,8 +35,10 @@ CREATE TABLE archives (
 );
 
 -- tabla related_entries
+
+DROP TABLE IF EXISTS related_entries;
 CREATE TABLE related_entries (
-    related_entries_id CHAR(36) PRIMARY KEY DEFAULT(UUID()),
+    related_entries_id CHAR(36) PRIMARY KEY,
     archive_id CHAR(36) NOT NULL,
     reference_folio VARCHAR(100),
     description TEXT,
