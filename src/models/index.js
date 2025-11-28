@@ -1,3 +1,4 @@
+export * from "./archives/list-models.js";
 export * from "./auth/register-models.js";
 export * from "./index.js";
 export * from "./users/delete-models.js";

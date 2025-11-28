@@ -1,3 +1,4 @@
+export * from "./archives/list-services.js";
 export * from "./auth/auth-services.js";
 export * from "./auth/register-services.js";
 export * from "./index.js";
