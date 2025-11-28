@@ -1,0 +1,46 @@
+import { ConflictError, DatabaseError } from "../../utils/error-utils.js";
+import { registerUserModel } from "../../models/index.js";
+
+import {
+	findUserEmailBasic,
+	generateUUID,
+	hashedPassword,
+} from "../../helpers/index.js";
+
+export const registerUserService = async ({
+	username,
+	password,
+	full_name,
+	email,
+	role,
+}) => {
+	const existingUser = await findUserEmailBasic(email);
+
+	if (existingUser)
+		throw new ConflictError("El correo ya se encuentra registrado");
+
+	const hashPassword = await hashedPassword(password);
+
+	const newUserId = generateUUID();
+
+	const insertResult = await registerUserModel(
+		newUserId,
+		username,
+		hashPassword,
+		full_name,
+		email,
+		role,
+	);
+
+	if (insertResult.affectedRows === 0)
+		throw new DatabaseError(
+			"No se pudo registrar el usuario en la base de datos",
+		);
+
+	return {
+		username,
+		full_name,
+		email,
+		role,
+	};
+};

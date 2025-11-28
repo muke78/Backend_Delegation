@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 
 import { config } from "../config/config.js";
-import { NotFoundError } from "../utils/error.utils.js";
+import { NotFoundError } from "../utils/error-utils.js";
 
 export const createToken = (user) => {
 	const payload = {

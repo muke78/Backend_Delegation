@@ -1,4 +1,4 @@
-import { logger } from "../utils/logger.utils.js";
+import { logger } from "../utils/logger-utils.js";
 
 export const validationFields = (schema, property = "body") => {
 	return (request, response, next) => {

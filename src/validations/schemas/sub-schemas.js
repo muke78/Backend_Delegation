@@ -2,13 +2,25 @@ import Joi from "joi";
 
 export const nameUserSchema = Joi.string()
 	.min(3)
-	.max(30)
+	.max(25)
 	.pattern(/^[A-Za-zÀ-ÿ\s]+$/)
 	.required()
 	.messages({
 		"string.pattern.base": "El nombre solo puede contener letras y espacios",
 		"string.min": "El nombre debe tener al menos 3 caracteres",
-		"string.max": "El nombre debe tener como máximo 30 caracteres",
+		"string.max": "El nombre debe tener como máximo 25 caracteres",
+		"any.required": "El nombre es obligatorio",
+	});
+
+export const nameUsers = Joi.string()
+	.min(3)
+	.max(40)
+	.pattern(/^[A-Za-zÀ-ÿ\s]+$/)
+	.required()
+	.messages({
+		"string.pattern.base": "El nombre solo puede contener letras y espacios",
+		"string.min": "El nombre debe tener al menos 3 caracteres",
+		"string.max": "El nombre debe tener como máximo 40 caracteres",
 		"any.required": "El nombre es obligatorio",
 	});
 
@@ -40,15 +52,7 @@ export const passwordSchema = Joi.string()
 	});
 
 export const roleSchema = Joi.string()
-	.valid(
-		"Administrador",
-		"Director(a)",
-		"Docente",
-		"Padre/Madre/Tutor",
-		"Secretaría",
-		"Psicólogo(a)",
-		"Soporte Técnico",
-	)
+	.valid("Administrador", "Capturista", "Consultora")
 	.required()
 	.messages({
 		"any.required": "El rol es obligatorio",
@@ -56,38 +60,9 @@ export const roleSchema = Joi.string()
 		"string.base": "El rol debe ser un texto",
 	});
 
-export const statusSchema = Joi.string()
-	.valid(
-		"Activo",
-		"Inactivo",
-		"Pendiente",
-		"Suspendido",
-		"Eliminado",
-		"Archivado",
-		"En revisión",
-		"Aprobado",
-		"Rechazado",
-		"Bloqueado",
-		"Caducado",
-	)
-	.required()
-	.messages({
-		"any.required": "El estatus es obligatorio",
-		"any.only": "El estatus debe ser uno de los valores permitidos",
-		"string.base": "El estatus debe ser un texto",
-	});
-
-export const accountTypeSchema = Joi.string()
-	.valid("local", "google")
-	.optional()
-	.messages({
-		"any.required": "El tipo de cuenta es obligatorio",
-		"any.only": "El tipo de cuenta debe ser 'local' o 'google'",
-	});
-
 export const uuidSchema = Joi.object({
 	id: Joi.string()
-		.uuid({ version: ["uuidv1", "uuidv4", "uuidv5"] })
+		.uuid({ version: ["uuidv4"] })
 		.required()
 		.messages({
 			"string.uuid": "El id debe ser un UUID válido",

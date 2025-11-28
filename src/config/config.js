@@ -43,11 +43,11 @@ export const config = {
 		keepAliveInitialDelay: 0,
 	},
 	cookie: {
-		cookieMaxAge: parseExpiration(process.env.EXP_COOKIE),
+		cookieMaxAge: parseExpiration(process.env.JWT_EXPIRES_COOKIE),
 	},
 	jwt: {
 		secret: process.env.JWT_SECRET,
-		expiresIn: process.env.EXP_TOKEN,
+		expiresIn: process.env.JWT_EXPIRES_IN,
 	},
 	docs: {
 		baseUrl: process.env.BASE_URL_SWAGGER,

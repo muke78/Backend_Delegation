@@ -4,9 +4,9 @@ import {
 	schemaAuthUserValidations,
 	schemaRegisterUserValidations,
 } from "../validations/index.js";
-import { validationFields } from "../middlewares/validation.middlewares.js";
-import { methodCreated, methodOK } from "../server/methods.server.js";
-import { AuthError } from "../utils/error.utils.js";
+import { validationFields } from "../middlewares/validation-middlewares.js";
+import { methodCreated, methodOK } from "../server/methods-server.js";
+import { AuthError } from "../utils/error-utils.js";
 import { Login, Register } from "../controllers/index.js";
 
 const auth = express.Router();
