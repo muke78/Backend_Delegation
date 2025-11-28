@@ -5,7 +5,6 @@ export * from "./find-user-auth.helper.js";
 export * from "./find-user-basic.helper.js";
 export * from "./find-user-by-id.helper.js";
 export * from "./hash-helpers.js";
-export * from "./index.js";
 export * from "./jwt-helpers.js";
 export * from "./last-login-helpers.js";
 export * from "./pagination-helpers.js";
