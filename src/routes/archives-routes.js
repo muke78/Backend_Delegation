@@ -1,6 +1,6 @@
 import express from "express";
 import { verifyToken } from "../middlewares/verify-jwt-middlewares.js";
-import { methodOK } from "../server/methods-server.js";
+import { methodOK, methodCreated } from "../server/methods-server.js";
 import {
 	DeleteArchive,
 	GetAllArchives,

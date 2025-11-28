@@ -64,7 +64,7 @@ export const listArchivesModel = async (
                     year,
                     storage_path,
                     source_sheet,
-                    create_by
+                    created_by
                 FROM archives
 				${where}
 				ORDER BY created DESC

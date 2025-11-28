@@ -4,6 +4,7 @@ import {
 	hashedPassword,
 } from "../../helpers/index.js";
 import { insertUserModel } from "../../models/index.js";
+import { ConflictError, DatabaseError } from "../../utils/error-utils.js";
 
 export const insertUserService = async ({
 	username,

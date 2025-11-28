@@ -20,7 +20,8 @@ export const methodOK = (request, response, result, message) => {
 		metadata: {
 			timestamp,
 			requestId,
-			dataCount: parseInt(formattedDataCount),
+			dataCount: totalDataCount,
+			dataCountFormatted: formattedDataCount,
 		},
 	};
 

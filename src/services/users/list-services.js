@@ -8,7 +8,7 @@ export const listUsersService = async ({ role, limit = 20, page = 1 }) => {
 		parseInt(page, 10),
 	);
 
-	if (result.length === 0)
+	if (result.rows.length === 0)
 		throw new NotFoundError(
 			"No se encontraron usuarios con los filtros proporcionados",
 			{ details: `${JSON.stringify({ role })}` },

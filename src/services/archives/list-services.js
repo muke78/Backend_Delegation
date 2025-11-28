@@ -22,7 +22,7 @@ export const listArchiveService = async ({
 		parseInt(page, 10),
 	);
 
-	if (result.length === 0)
+	if (result.rows.length === 0)
 		throw new NotFoundError(
 			"No se encontraron archivos con los filtros proporcionados",
 			{
@@ -36,4 +36,6 @@ export const listArchiveService = async ({
 				})}`,
 			},
 		);
+
+	return result;
 };

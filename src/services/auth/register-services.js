@@ -17,7 +17,7 @@ export const registerUserService = async ({
 	const existingUser = await findUserEmailBasic(email);
 
 	if (existingUser)
-		throw new ConflictError("EL correo ya se encuentra registrado");
+		throw new ConflictError("El correo ya se encuentra registrado");
 
 	const hashPassword = await hashedPassword(password);
 

@@ -7,7 +7,7 @@ export const GetDuplexArchiveAndRelated = async (archiveId) => {
 };
 
 export const SearchOfArchives = async (folio) => {
-	const searchOfArchives = await searchArchiveServive(folio);
+	const searchOfArchives = await searchArchiveService(folio);
 	return searchOfArchives;
 };
 
