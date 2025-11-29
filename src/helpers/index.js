@@ -1,5 +1,6 @@
 export * from "./connection-helpers.js";
 export * from "./delete-helpers.js";
+export * from "./find-archives-by-id.js";
 export * from "./find-email-in-other-user.helper.js";
 export * from "./find-user-auth.helper.js";
 export * from "./find-user-basic.helper.js";

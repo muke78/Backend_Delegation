@@ -31,7 +31,7 @@ archives.get("/search", verifyToken, async (request, response, next) => {
 	try {
 		const { folio } = request.query;
 		const result = await SearchOfArchives(folio);
-		methodOK(request, response, result);
+		methodOK(request, response, result, "Busqueda realizada correctamente");
 	} catch (error) {
 		next(error);
 	}
@@ -53,7 +53,12 @@ archives.put("/:id/regenerate-folio", verifyToken, async (req, res, next) => {
 	try {
 		const archiveId = req.params.id;
 		const result = await RegenerateFolio(archiveId);
-		methodOK(req, res, result, "El folio fue regenerado correctamente");
+		methodOK(
+			req,
+			res,
+			undefined,
+			`El folio ${result.newFolio} fue reconstruido exitosamente`,
+		);
 	} catch (error) {
 		next(error);
 	}

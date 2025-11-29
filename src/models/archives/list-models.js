@@ -29,8 +29,8 @@ export const listArchivesModel = async (
 	}
 
 	if (name && name !== "All") {
-		where += " AND name = ?";
-		values.push(name);
+		where += " AND name LIKE ?";
+		values.push(`%${name}%`);
 	}
 
 	if (doc_type && doc_type !== "All") {
@@ -48,7 +48,9 @@ export const listArchivesModel = async (
 		values.push(created_by);
 	}
 
-	const countQuery = buildCountQuery("archives", "", where);
+	const joins = `LEFT JOIN users ON archives.created_by = users.user_id`;
+
+	const countQuery = buildCountQuery("archives", joins, where);
 	const [countResult] = await connectionQuery(countQuery, values);
 	const totalRecords = countResult.total;
 
@@ -64,10 +66,12 @@ export const listArchivesModel = async (
                     year,
                     storage_path,
                     source_sheet,
-                    created_by
+                    created_by,
+					users.full_name AS created_by_name
                 FROM archives
+				${joins}
 				${where}
-				ORDER BY created DESC
+				ORDER BY archives.created DESC
 				LIMIT ? OFFSET ?`;
 
 	const rows = await connectionQuery(query, [...values, limit, offset]);

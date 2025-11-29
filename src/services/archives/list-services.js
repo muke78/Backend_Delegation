@@ -11,15 +11,19 @@ export const listArchiveService = async ({
 	limit = 20,
 	page = 1,
 }) => {
+	const safeYear = year ? Number(year) : null;
+	const safeLimit = Number(limit) > 0 ? Number(limit) : 20;
+	const safePage = Number(page) > 0 ? Number(page) : 1;
+
 	const result = await listArchivesModel(
 		identifier,
 		base_folio,
 		name,
 		doc_type,
-		parseInt(year, 10),
+		safeYear,
 		created_by,
-		parseInt(limit, 10),
-		parseInt(page, 10),
+		safeLimit,
+		safePage,
 	);
 
 	if (result.rows.length === 0)
