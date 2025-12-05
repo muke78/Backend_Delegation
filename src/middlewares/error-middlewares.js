@@ -19,6 +19,7 @@ export const errorHandler = (err, request, response, _next) => {
 		body: request.body,
 		params: request.params,
 		user: request.user?.user_id,
+		timestamp,
 		errorId,
 	});
 
@@ -30,11 +31,11 @@ export const errorHandler = (err, request, response, _next) => {
 			details:
 				err.details ||
 				"Ocurrió un problema en el servidor. Por favor, intenta más tarde.",
-			timestamp,
-			errorId,
+			timestamp: config.nodeEnv === "production" ? undefined : err.timestamp,
+			errorId: config.nodeEnv === "production" ? undefined : err.errorId,
 			stack: config.nodeEnv === "production" ? undefined : err.stack,
 			path: request.originalUrl,
-			method: request.method,
+			method: config.nodeEnv === "production" ? undefined : err.method,
 			query: request.query,
 		},
 	});

@@ -1,8 +1,15 @@
 import { connectionQuery } from "../helpers/index.js";
 
-const allowedTables = ["users", "archives"];
-const allowedFields = ["user_id", "username", "email", "full_name", "name"];
-const allowedIdFields = ["user_id", "id", "archives_id"];
+const allowedTables = ["users", "archives", "related_entries"];
+const allowedFields = [
+	"user_id",
+	"username",
+	"email",
+	"full_name",
+	"name",
+	"description",
+];
+const allowedIdFields = ["user_id", "id", "archives_id", "related_entries_id"];
 
 export const validateFoundToEliminated = async (
 	paramId,
