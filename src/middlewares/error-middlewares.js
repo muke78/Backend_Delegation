@@ -1,11 +1,11 @@
-import crypto from "node:crypto";
+import { generateUUID } from "../helpers/index.js";
 import { logger } from "../utils/logger-utils.js";
 import { config } from "../config/config.js";
 
 export const errorHandler = (err, request, response, _next) => {
 	const status = err.statusCode || 500;
 	const timestamp = new Date().toISOString();
-	const errorId = crypto.randomUUID();
+	const errorId = generateUUID();
 
 	logger.error({
 		message: err.message || "Se produjo un error inesperado.",

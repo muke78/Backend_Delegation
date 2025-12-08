@@ -1,9 +1,9 @@
-import crypto from "node:crypto";
 import { logger } from "../utils/logger-utils.js";
+import { generateUUID } from "../helpers/index.js";
 
 export const methodOK = (request, response, result, message) => {
 	const timestamp = new Date().toISOString();
-	const requestId = crypto.randomUUID();
+	const requestId = generateUUID();
 	const totalDataCount = Array.isArray(result)
 		? result.length
 		: result && Array.isArray(result.rows)
@@ -41,7 +41,7 @@ export const methodOK = (request, response, result, message) => {
 
 export const methodCreated = (request, response, result, message) => {
 	const timestamp = new Date().toISOString();
-	const requestId = crypto.randomUUID();
+	const requestId = generateUUID();
 
 	const responsePayload = {
 		success: true,
