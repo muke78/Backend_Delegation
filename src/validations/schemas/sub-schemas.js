@@ -1,5 +1,35 @@
 import Joi from "joi";
 
+const currentYear = new Date().getFullYear();
+
+export const alphaNumericSchema = Joi.string()
+	.trim()
+	.pattern(/^[A-Za-z0-9\s]+$/, "solo letras y números")
+	.min(2)
+	.max(100)
+	.messages({
+		"string.base": "El campo debe ser un texto",
+		"string.empty": "El campo no puede estar vacío",
+		"string.pattern.name": "El campo solo puede contener letras y números",
+		"string.min": "El campo es demasiado corto",
+		"string.max": "El campo es demasiado largo",
+	});
+
+export const yearSchema = Joi.number()
+	.integer()
+	.min(1900)
+	.max(currentYear)
+	.messages({
+		"number.base": "El año debe ser un número",
+		"number.integer": "El año debe ser un número entero",
+		"number.min": "El año no puede ser menor a 1900",
+		"number.max": `El año no puede ser mayor a ${currentYear}`,
+	});
+
+export const isoDateSchema = Joi.date().iso().messages({
+	"date.format": "La fecha debe estar en formato ISO (YYYY-MM-DD)",
+});
+
 export const nameUserSchema = Joi.string()
 	.min(3)
 	.max(25)
@@ -61,15 +91,29 @@ export const roleSchema = Joi.string()
 		"string.base": "El rol debe ser un texto",
 	});
 
-export const uuidSchema = Joi.object({
-	id: Joi.string()
-		.uuid({ version: ["uuidv4"] })
-		.required()
-		.messages({
-			"string.uuid": "El id debe ser un UUID válido",
-			"any.required": "El id es obligatorio",
-		}),
-});
+export const uuidSchema = Joi.string()
+	.uuid({ version: ["uuidv4"] })
+	.required()
+	.messages({
+		"string.uuid": "El id debe ser un UUID válido",
+		"any.required": "El id es obligatorio",
+	});
+
+export const multiUuidSchema = (keys = []) => {
+	const shape = {};
+
+	for (const key of keys) {
+		shape[key] = Joi.string()
+			.uuid()
+			.required()
+			.messages({
+				"string.uuid": `El campo "${key}" debe ser un UUID válido`,
+				"any.required": `El campo "${key}" es obligatorio`,
+			});
+	}
+
+	return Joi.object(shape);
+};
 
 export const paginationSchema = Joi.object({
 	limit: Joi.number()

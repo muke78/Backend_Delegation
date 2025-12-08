@@ -8,52 +8,75 @@ import {
 	InsertRelated,
 	UpdateRelated,
 } from "../controllers/index.js";
+import { validationFields } from "../middlewares/validation-middlewares.js";
+import {
+	multiUuidSchema,
+	schemaListRelatedValidations,
+} from "../validations/index.js";
 
 const related = express.Router({ mergeParams: true });
 
 //  GET api/archives/:archiveId/related/:relationId
-related.get("/:relationId", verifyToken, async (request, response, next) => {
-	try {
-		const archiveId = request.params.archiveId;
-		const relationId = request.params.relationId;
+related.get(
+	"/:relationId",
+	verifyToken,
+	validationFields(multiUuidSchema(["archiveId", "relationId"]), "params"),
+	async (request, response, next) => {
+		try {
+			const archiveId = request.params.archiveId;
+			const relationId = request.params.relationId;
 
-		const result = await GetRelatedSpecify(archiveId, relationId);
-		methodOK(request, response, result);
-	} catch (error) {
-		next(error);
-	}
-});
+			const result = await GetRelatedSpecify(archiveId, relationId);
+			methodOK(request, response, result);
+		} catch (error) {
+			next(error);
+		}
+	},
+);
 
 // GET api/archives/:archiveId/related
-related.get("/", verifyToken, async (request, response, next) => {
-	try {
-		const archiveId = request.params.archiveId;
-		const listRelated = request.query;
+related.get(
+	"/",
+	verifyToken,
+	validationFields(multiUuidSchema(["archiveId"]), "params"),
+	validationFields(schemaListRelatedValidations, "query"),
 
-		const result = await GetRelatedWithArchives(archiveId, listRelated);
-		methodOK(request, response, result);
-	} catch (error) {
-		next(error);
-	}
-});
+	async (request, response, next) => {
+		try {
+			const archiveId = request.params.archiveId;
+			const listRelated = request.query;
+
+			const result = await GetRelatedWithArchives(archiveId, listRelated);
+			methodOK(request, response, result);
+		} catch (error) {
+			next(error);
+		}
+	},
+);
 
 // POST api/archives/:archiveId/related
-related.post("/", verifyToken, async (request, response, next) => {
-	try {
-		const insertRelated = request.body;
-		const archiveId = request.params.archiveId;
+related.post(
+	"/",
+	verifyToken,
+	validationFields(multiUuidSchema(["archiveId"]), "params"),
+	validationFields(),
+	async (request, response, next) => {
+		try {
+			const insertRelated = request.body;
+			const archiveId = request.params.archiveId;
 
-		const result = await InsertRelated(insertRelated, archiveId);
-		methodCreated(
-			request,
-			response,
-			result,
-			"Se creo correctamente la referencia",
-		);
-	} catch (error) {
-		next(error);
-	}
-});
+			const result = await InsertRelated(insertRelated, archiveId);
+			methodCreated(
+				request,
+				response,
+				result,
+				"Se creo correctamente la referencia",
+			);
+		} catch (error) {
+			next(error);
+		}
+	},
+);
 
 // PUT api/archives/:archiveId/related/:relationId
 related.put("/:relationId", verifyToken, async (request, response, next) => {
