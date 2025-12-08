@@ -2,6 +2,7 @@ import {
 	deleteArchiveService,
 	insertArchiveService,
 	listArchiveService,
+	listDuplexArchiveAndRelatedService,
 	listOnlyArchiveService,
 	regenerateFolioService,
 	searchArchiveService,
