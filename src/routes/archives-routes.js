@@ -16,22 +16,26 @@ import {
 const archives = express.Router();
 
 // GET /api/archive/full_duplex_archives_and_related
-archives.get("/:id/duplex", verifyToken, async (request, response, next) => {
-	try {
-		const archiveId = request.params.id;
-		const result = await GetDuplexArchiveAndRelated(archiveId);
-		methodOK(request, response, result);
-	} catch (error) {
-		next(error);
-	}
-});
+archives.get(
+	"/:archiveId/duplex",
+	verifyToken,
+	async (request, response, next) => {
+		try {
+			const archiveId = request.params.archiveId;
+			const result = await GetDuplexArchiveAndRelated(archiveId);
+			methodOK(request, response, result);
+		} catch (error) {
+			next(error);
+		}
+	},
+);
 
 // GET /api/archive/search
 archives.get("/search", verifyToken, async (request, response, next) => {
 	try {
 		const { folio } = request.query;
 		const result = await SearchOfArchives(folio);
-		methodOK(request, response, result);
+		methodOK(request, response, result, "Busqueda realizada correctamente");
 	} catch (error) {
 		next(error);
 	}
@@ -49,15 +53,24 @@ archives.get("/validate-folio", verifyToken, async (req, res, next) => {
 });
 
 //PUT /api/archives/regenerate-folio/:id
-archives.put("/:id/regenerate-folio", verifyToken, async (req, res, next) => {
-	try {
-		const archiveId = req.params.id;
-		const result = await RegenerateFolio(archiveId);
-		methodOK(req, res, result, "El folio fue regenerado correctamente");
-	} catch (error) {
-		next(error);
-	}
-});
+archives.put(
+	"/:archiveId/regenerate-folio",
+	verifyToken,
+	async (req, res, next) => {
+		try {
+			const archiveId = req.params.archiveId;
+			const result = await RegenerateFolio(archiveId);
+			methodOK(
+				req,
+				res,
+				undefined,
+				`El folio ${result.newFolio} fue reconstruido exitosamente`,
+			);
+		} catch (error) {
+			next(error);
+		}
+	},
+);
 
 // GET /api/archive/list_of_archives
 archives.get("/", verifyToken, async (request, response, next) => {
@@ -71,9 +84,9 @@ archives.get("/", verifyToken, async (request, response, next) => {
 });
 
 // GET /api/archive/list_only_archives
-archives.get("/:id", verifyToken, async (request, response, next) => {
+archives.get("/:archiveId", verifyToken, async (request, response, next) => {
 	try {
-		const archiveId = request.params.id;
+		const archiveId = request.params.archiveId;
 		const result = await GetOnlyArchive(archiveId);
 		methodOK(request, response, result);
 	} catch (error) {
@@ -98,9 +111,9 @@ archives.post("/", verifyToken, async (request, response, next) => {
 });
 
 //PUT /api/archives/update/:id
-archives.put("/:id", verifyToken, async (request, response, next) => {
+archives.put("/:archiveId", verifyToken, async (request, response, next) => {
 	try {
-		const archiveId = request.params.id;
+		const archiveId = request.params.archiveId;
 		const archiveData = request.body;
 		const result = await UpdateArchive(archiveId, archiveData);
 		methodOK(
@@ -115,15 +128,15 @@ archives.put("/:id", verifyToken, async (request, response, next) => {
 });
 
 //DELETE /api/archives/delete/:id
-archives.delete("/:id", verifyToken, async (request, response, next) => {
+archives.delete("/:archiveId", verifyToken, async (request, response, next) => {
 	try {
-		const archiveId = request.params.id;
+		const archiveId = request.params.archiveId;
 		const result = await DeleteArchive(archiveId);
 		methodOK(
 			request,
 			response,
 			undefined,
-			`El archivo ${result.name} fue eliminado correctamente`,
+			`El archivo ${result.name} y ${result.deletedRelated} referencias fueron eliminados correctamente`,
 		);
 	} catch (error) {
 		next(error);

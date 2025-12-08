@@ -40,9 +40,9 @@ app.get("/", (_req, res) => {
 			name: "Khelde",
 			github: "https://github.com/muke78",
 		},
-		api: "/api/v1",
+		api: config.api.basePath,
 		status: "🟢 API working correctly",
-		documentation: `${config.docs.baseUrl}`,
+		documentation: config.docs.baseUrl,
 	});
 });
 

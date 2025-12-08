@@ -1,8 +1,15 @@
 import { connectionQuery } from "../helpers/index.js";
 
-const allowedTables = ["users"];
-const allowedFields = ["user_id", "username", "email", "full_name"];
-const allowedIdFields = ["user_id", "id"];
+const allowedTables = ["users", "archives", "related_entries"];
+const allowedFields = [
+	"user_id",
+	"username",
+	"email",
+	"full_name",
+	"name",
+	"description",
+];
+const allowedIdFields = ["user_id", "id", "archives_id", "related_entries_id"];
 
 export const validateFoundToEliminated = async (
 	paramId,
@@ -20,11 +27,11 @@ export const validateFoundToEliminated = async (
 		throw new Error(`Invalid field: ${field_name}`);
 	}
 
+	// Validar Id's
 	if (!allowedIdFields.includes(filed_id)) {
 		throw new Error(`Invalid ID field: ${filed_id}`);
 	}
 
-	// Query segura
 	const query = `
         SELECT \`${field_name}\`
         FROM \`${table_name}\`

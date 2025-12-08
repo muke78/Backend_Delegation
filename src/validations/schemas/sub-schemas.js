@@ -3,10 +3,11 @@ import Joi from "joi";
 export const nameUserSchema = Joi.string()
 	.min(3)
 	.max(25)
-	.pattern(/^[A-Za-zÀ-ÿ\s]+$/)
+	.pattern(/^[A-Za-zÀ-ÿ0-9\s]+$/)
 	.required()
 	.messages({
-		"string.pattern.base": "El nombre solo puede contener letras y espacios",
+		"string.pattern.base":
+			"El nombre solo puede contener letras, números y espacios",
 		"string.min": "El nombre debe tener al menos 3 caracteres",
 		"string.max": "El nombre debe tener como máximo 25 caracteres",
 		"any.required": "El nombre es obligatorio",

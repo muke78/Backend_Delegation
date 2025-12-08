@@ -15,6 +15,7 @@ export const deleteUserService = async (userId) => {
 	}
 
 	const deleteUserFromID = await deleteUserModel(userId);
+
 	if (deleteUserFromID.affectedRows === 0) {
 		throw new NotFoundError("El usuario no fue encontrado para eliminar");
 	}
