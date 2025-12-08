@@ -11,6 +11,7 @@ export const listRelatedWithArchivesService = async (
 		limit = 20,
 		page = 1,
 	},
+	{ throwIfEmpty = true } = {},
 ) => {
 	const safeLimit = Number(limit) > 0 ? Number(limit) : 20;
 	const safePage = Number(page) > 0 ? Number(page) : 1;
@@ -25,7 +26,7 @@ export const listRelatedWithArchivesService = async (
 		safePage,
 	);
 
-	if (result.rows.length === 0)
+	if (throwIfEmpty && result.rows.length === 0)
 		throw new NotFoundError(
 			"No se encontraron referencias con los filtros proporcionados",
 			{
