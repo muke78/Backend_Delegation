@@ -31,11 +31,11 @@ export const errorHandler = (err, request, response, _next) => {
 			details:
 				err.details ||
 				"Ocurrió un problema en el servidor. Por favor, intenta más tarde.",
-			timestamp: config.nodeEnv === "production" ? undefined : err.timestamp,
-			errorId: config.nodeEnv === "production" ? undefined : err.errorId,
+			timestamp: config.nodeEnv === "production" ? undefined : timestamp,
+			errorId: config.nodeEnv === "production" ? undefined : errorId,
 			stack: config.nodeEnv === "production" ? undefined : err.stack,
 			path: request.originalUrl,
-			method: config.nodeEnv === "production" ? undefined : err.method,
+			method: config.nodeEnv === "production" ? undefined : request.method,
 			query: request.query,
 		},
 	});

@@ -44,6 +44,5 @@ export const updateRelatedModel = async (payload) => {
                     SET ${fields.join(", ")}
                     WHERE related_entries_id = ?;`;
 
-	console.log(query);
 	return await connectionQuery(query, params);
 };

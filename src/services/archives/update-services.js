@@ -1,6 +1,10 @@
 import { findArchivesId } from "../../helpers/find-archives-by-id.js";
 import { updateArchiveModel } from "../../models/index.js";
-import { ConflictError, NotFoundError } from "../../utils/error-utils.js";
+import {
+	ConflictError,
+	DatabaseError,
+	NotFoundError,
+} from "../../utils/error-utils.js";
 import { validateFolioService } from "./validate-services.js";
 
 export const updateArchiveService = async (

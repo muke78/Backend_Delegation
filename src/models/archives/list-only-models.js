@@ -1,6 +1,6 @@
 import { connectionQuery } from "../../helpers/index.js";
 
-export const listOnlyArhiveModel = async (archiveId) => {
+export const listOnlyArchiveModel = async (archiveId) => {
 	const query = `SELECT 
                         archives_id,
                         identifier,

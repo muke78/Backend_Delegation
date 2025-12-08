@@ -1,6 +1,6 @@
 import { validateFolioService } from "../../services/index.js";
 import { generateUUID } from "../../helpers/index.js";
-import { ConflictError } from "../../utils/error-utils.js";
+import { ConflictError, DatabaseError } from "../../utils/error-utils.js";
 import { insertArchiveModel } from "../../models/index.js";
 
 export const insertArchiveService = async ({
