@@ -11,8 +11,9 @@ export const updateRelatedEntriesFolio = async (
                             SUBSTRING(reference_folio,
                                 LENGTH(?) + 1))
                 WHERE
-                    archive_id = ?;`;
-	const params = [newFolio, oldFolio, archiveId];
+                    archive_id = ?
+                    AND reference_folio LIKE CONCAT(?, '%');`;
+	const params = [newFolio, oldFolio, archiveId, oldFolio];
 
 	return await connectionQuery(query, params);
 };
