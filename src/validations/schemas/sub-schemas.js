@@ -17,18 +17,25 @@ export const alphaNumericSchema = Joi.string()
 
 export const yearSchema = Joi.date()
 	.iso()
-	.min(1900)
-	.max(currentYear)
+	.min("1900-01-01")
+	.max("now")
 	.messages({
 		"date.base": "La fecha debe ser válida",
 		"date.format": "La fecha debe tener formato ISO (YYYY-MM-DD)",
 		"date.min": "La fecha no puede ser menor al año 1900",
-		"date.max": `La fecha no puede ser mayor a ${currentYear}`,
+		"date.max": "La fecha no puede ser mayor al día actual",
 	});
 
-export const isoDateSchema = Joi.date().iso().messages({
-	"date.format": "La fecha debe estar en formato ISO (YYYY-MM-DD)",
-});
+export const yearNumberSchema = Joi.number()
+	.integer()
+	.min(1900)
+	.max(currentYear)
+	.messages({
+		"number.base": "El año debe ser un número",
+		"number.integer": "El año debe ser un número entero",
+		"number.min": "El año no puede ser menor a 1900",
+		"number.max": `La año no puede ser mayor a ${currentYear}`,
+	});
 
 export const nameUserSchema = Joi.string()
 	.min(3)

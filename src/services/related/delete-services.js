@@ -15,14 +15,15 @@ export const deleteRelatedService = async (relationId, archiveId) => {
 
 	const findArchive = await findArchivesId(archiveId);
 
-	if (foundArchiveToEliminated.length === 0)
-		throw new NotFoundError(
-			"La referencia no fue encontrada o puede que su archivo no exista",
-		);
-
 	if (findArchive === undefined)
+		throw new NotFoundError("El archivo no fue encontrado.");
+
+	if (foundArchiveToEliminated.length === 0)
+		throw new NotFoundError("La referencia no fue encontrada.");
+
+	if (findArchive.archives_id !== archiveId)
 		throw new NotFoundError(
-			"El archivo no fue encontrado o puede que su referencia no exista",
+			"La referencia no pertenece al archivo especificado.",
 		);
 
 	const deleteRelatedFromID = await deleteRelatedModel(relationId);

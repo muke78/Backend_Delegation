@@ -1,13 +1,14 @@
 import Joi from "joi";
+
 import {
 	alphaNumericSchema,
-	isoDateSchema,
+	yearSchema,
 	paginationSchema,
 } from "../schemas/sub-schemas.js";
 
 export const schemaListRelatedValidations = Joi.object({
 	description: alphaNumericSchema.optional().empty(""),
-	event_date: isoDateSchema.optional().empty(""),
+	event_date: yearSchema.optional().empty(""),
 	responsible_person: alphaNumericSchema.optional().empty(""),
 	page: paginationSchema.extract("page"),
 	limit: paginationSchema.extract("limit"),
@@ -15,7 +16,7 @@ export const schemaListRelatedValidations = Joi.object({
 
 export const schemaCreateRelatedValidations = Joi.object({
 	description: alphaNumericSchema,
-	event_date: isoDateSchema,
+	event_date: yearSchema,
 	responsible_person: alphaNumericSchema.optional().empty(""),
 	responsible_role: alphaNumericSchema.optional().empty(""),
 	notas: alphaNumericSchema.optional().empty(""),
@@ -23,7 +24,7 @@ export const schemaCreateRelatedValidations = Joi.object({
 
 export const schemaUpdateRelatedValidations = Joi.object({
 	description: alphaNumericSchema.optional().empty(""),
-	event_date: isoDateSchema.optional().empty(""),
+	event_date: yearSchema.optional().empty(""),
 	responsible_person: alphaNumericSchema.optional().empty(""),
 	responsible_role: alphaNumericSchema.optional().empty(""),
 	notas: alphaNumericSchema.optional().empty(""),

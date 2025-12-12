@@ -11,9 +11,9 @@ export const updateRelatedService = async (
 
 	const findArchive = await findArchivesId(archiveId);
 
-	if (findRelated === undefined)
+	if (findRelated === undefined || findRelated.archive_id !== archiveId)
 		throw new NotFoundError(
-			"No se encontro la referencia que se quiere editar",
+			"No se encontro la referencia que se quiere editar en este archivo",
 		);
 
 	if (findArchive === undefined)

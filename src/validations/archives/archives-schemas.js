@@ -3,7 +3,7 @@ import {
 	alphaNumericSchema,
 	paginationSchema,
 	uuidSchema,
-	yearSchema,
+	yearNumberSchema,
 } from "../schemas/sub-schemas.js";
 
 export const schemaFolioValidations = Joi.object({
@@ -27,7 +27,7 @@ export const schemaListArchivesValidations = Joi.object({
 	base_folio: alphaNumericSchema.optional(),
 	name: alphaNumericSchema.optional(),
 	doc_type: alphaNumericSchema.optional(),
-	year: yearSchema.optional(),
+	year: yearNumberSchema.optional(),
 	created_by: uuidSchema.optional(),
 	page: paginationSchema.extract("page"),
 	limit: paginationSchema.extract("limit"),
@@ -38,7 +38,7 @@ export const schemaCreateArchivesValidations = Joi.object({
 	base_folio: alphaNumericSchema,
 	name: alphaNumericSchema,
 	doc_type: alphaNumericSchema.optional(),
-	year: yearSchema.optional(),
+	year: yearNumberSchema.optional(),
 	storage_path: alphaNumericSchema.optional().empty(""),
 	source_sheet: alphaNumericSchema.optional().empty(""),
 	created_by: uuidSchema,
@@ -49,7 +49,7 @@ export const schemaUpdateArchiveValidations = Joi.object({
 	base_folio: alphaNumericSchema.optional(),
 	name: alphaNumericSchema.optional(),
 	doc_type: alphaNumericSchema.optional(),
-	year: yearSchema.optional(),
+	year: yearNumberSchema.optional(),
 	storage_path: alphaNumericSchema.optional().empty(""),
 	source_sheet: alphaNumericSchema.optional().empty(""),
 	created_by: uuidSchema.optional(),
