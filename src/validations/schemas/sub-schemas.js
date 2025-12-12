@@ -15,15 +15,15 @@ export const alphaNumericSchema = Joi.string()
 		"string.max": "El campo es demasiado largo",
 	});
 
-export const yearSchema = Joi.number()
-	.integer()
+export const yearSchema = Joi.date()
+	.iso()
 	.min(1900)
 	.max(currentYear)
 	.messages({
-		"number.base": "El año debe ser un número",
-		"number.integer": "El año debe ser un número entero",
-		"number.min": "El año no puede ser menor a 1900",
-		"number.max": `El año no puede ser mayor a ${currentYear}`,
+		"date.base": "La fecha debe ser válida",
+		"date.format": "La fecha debe tener formato ISO (YYYY-MM-DD)",
+		"date.min": "La fecha no puede ser menor al año 1900",
+		"date.max": `La fecha no puede ser mayor a ${currentYear}`,
 	});
 
 export const isoDateSchema = Joi.date().iso().messages({

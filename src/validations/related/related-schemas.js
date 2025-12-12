@@ -17,5 +17,14 @@ export const schemaCreateRelatedValidations = Joi.object({
 	description: alphaNumericSchema,
 	event_date: isoDateSchema,
 	responsible_person: alphaNumericSchema.optional().empty(""),
+	responsible_role: alphaNumericSchema.optional().empty(""),
+	notas: alphaNumericSchema.optional().empty(""),
+});
+
+export const schemaUpdateRelatedValidations = Joi.object({
+	description: alphaNumericSchema.optional().empty(""),
+	event_date: isoDateSchema.optional().empty(""),
+	responsible_person: alphaNumericSchema.optional().empty(""),
+	responsible_role: alphaNumericSchema.optional().empty(""),
 	notas: alphaNumericSchema.optional().empty(""),
 });

@@ -1,17 +1,23 @@
-import { findRelatedId } from "../../helpers/index.js";
+import { findArchivesId, findRelatedId } from "../../helpers/index.js";
 import { updateRelatedModel } from "../../models/index.js";
 import { DatabaseError, NotFoundError } from "../../utils/error-utils.js";
 
 export const updateRelatedService = async (
 	relationId,
+	archiveId,
 	{ description, event_date, responsible_person, responsible_role, notas },
 ) => {
-	const findId = await findRelatedId(relationId);
+	const findRelated = await findRelatedId(relationId);
 
-	if (!findId)
+	const findArchive = await findArchivesId(archiveId);
+
+	if (findRelated === undefined)
 		throw new NotFoundError(
 			"No se encontro la referencia que se quiere editar",
 		);
+
+	if (findArchive === undefined)
+		throw new NotFoundError("No se encontro el archivo que se quiere editar");
 
 	const updatedData = {
 		description,

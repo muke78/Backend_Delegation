@@ -22,7 +22,7 @@ export const updateArchiveService = async (
 ) => {
 	const findFolio = await findArchivesId(archiveId);
 
-	if (!findFolio)
+	if (findFolio === undefined)
 		throw new NotFoundError("No se encontro el folio que se quiere editar");
 
 	const folioChanged =
