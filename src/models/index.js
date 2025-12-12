@@ -6,6 +6,7 @@ export * from "./archives/list-only-models.js";
 export * from "./archives/regenerate-models.js";
 export * from "./archives/search-models.js";
 export * from "./archives/update-models.js";
+export * from "./archives/update-related-entries-folio.models.js";
 export * from "./archives/validate-models.js";
 export * from "./auth/register-models.js";
 export * from "./users/delete-models.js";
