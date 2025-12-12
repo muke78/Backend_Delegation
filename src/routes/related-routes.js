@@ -8,85 +8,123 @@ import {
 	InsertRelated,
 	UpdateRelated,
 } from "../controllers/index.js";
+import { validationFields } from "../middlewares/validation-middlewares.js";
+import {
+	multiUuidSchema,
+	schemaCreateRelatedValidations,
+	schemaListRelatedValidations,
+	schemaUpdateRelatedValidations,
+} from "../validations/index.js";
 
 const related = express.Router({ mergeParams: true });
 
 //  GET api/archives/:archiveId/related/:relationId
-related.get("/:relationId", verifyToken, async (request, response, next) => {
-	try {
-		const archiveId = request.params.archiveId;
-		const relationId = request.params.relationId;
+related.get(
+	"/:relationId",
+	verifyToken,
+	validationFields(multiUuidSchema(["archiveId", "relationId"]), "params"),
+	async (request, response, next) => {
+		try {
+			const archiveId = request.params.archiveId;
+			const relationId = request.params.relationId;
 
-		const result = await GetRelatedSpecify(archiveId, relationId);
-		methodOK(request, response, result);
-	} catch (error) {
-		next(error);
-	}
-});
+			const result = await GetRelatedSpecify(archiveId, relationId);
+			methodOK(request, response, result);
+		} catch (error) {
+			next(error);
+		}
+	},
+);
 
 // GET api/archives/:archiveId/related
-related.get("/", verifyToken, async (request, response, next) => {
-	try {
-		const archiveId = request.params.archiveId;
-		const listRelated = request.query;
+related.get(
+	"/",
+	verifyToken,
+	validationFields(multiUuidSchema(["archiveId"]), "params"),
+	validationFields(schemaListRelatedValidations, "query"),
 
-		const result = await GetRelatedWithArchives(archiveId, listRelated);
-		methodOK(request, response, result);
-	} catch (error) {
-		next(error);
-	}
-});
+	async (request, response, next) => {
+		try {
+			const archiveId = request.params.archiveId;
+			const listRelated = request.query;
+
+			const result = await GetRelatedWithArchives(archiveId, listRelated);
+			methodOK(request, response, result);
+		} catch (error) {
+			next(error);
+		}
+	},
+);
 
 // POST api/archives/:archiveId/related
-related.post("/", verifyToken, async (request, response, next) => {
-	try {
-		const insertRelated = request.body;
-		const archiveId = request.params.archiveId;
+related.post(
+	"/",
+	verifyToken,
+	validationFields(multiUuidSchema(["archiveId"]), "params"),
+	validationFields(schemaCreateRelatedValidations, "body"),
+	async (request, response, next) => {
+		try {
+			const archiveId = request.params.archiveId;
+			const insertRelated = request.body;
 
-		const result = await InsertRelated(insertRelated, archiveId);
-		methodCreated(
-			request,
-			response,
-			result,
-			"Se creo correctamente la referencia",
-		);
-	} catch (error) {
-		next(error);
-	}
-});
+			const result = await InsertRelated(insertRelated, archiveId);
+			methodCreated(
+				request,
+				response,
+				result,
+				"Se creo correctamente la referencia",
+			);
+		} catch (error) {
+			next(error);
+		}
+	},
+);
 
 // PUT api/archives/:archiveId/related/:relationId
-related.put("/:relationId", verifyToken, async (request, response, next) => {
-	try {
-		const relationId = request.params.relationId;
-		const relatedData = request.body;
+related.put(
+	"/:relationId",
+	verifyToken,
+	validationFields(multiUuidSchema(["relationId", "archiveId"]), "params"),
+	validationFields(schemaUpdateRelatedValidations, "body"),
+	async (request, response, next) => {
+		try {
+			const archiveId = request.params.archiveId;
+			const relationId = request.params.relationId;
+			const relatedData = request.body;
 
-		const result = await UpdateRelated(relationId, relatedData);
-		methodOK(
-			request,
-			response,
-			result,
-			"La referencia se actualizo de forma correcta",
-		);
-	} catch (error) {
-		next(error);
-	}
-});
+			const result = await UpdateRelated(relationId, archiveId, relatedData);
+			methodOK(
+				request,
+				response,
+				result,
+				"La referencia se actualizo de forma correcta",
+			);
+		} catch (error) {
+			next(error);
+		}
+	},
+);
 
 // DELETE api/archives/:archiveId/related/:relationId
-related.delete("/:relationId", verifyToken, async (request, response, next) => {
-	try {
-		const relationId = request.params.relationId;
-		const result = await DeleteRelated(relationId);
-		methodOK(
-			request,
-			response,
-			undefined,
-			`La referencia ${result.description} fue eliminado correctamente`,
-		);
-	} catch (error) {
-		next(error);
-	}
-});
+related.delete(
+	"/:relationId",
+	verifyToken,
+	validationFields(multiUuidSchema(["relationId", "archiveId"]), "params"),
+	async (request, response, next) => {
+		try {
+			const archiveId = request.params.archiveId;
+			const relationId = request.params.relationId;
+			const result = await DeleteRelated(relationId, archiveId);
+			methodOK(
+				request,
+				response,
+				undefined,
+				`La referencia ${result.description} fue eliminado correctamente`,
+			);
+		} catch (error) {
+			next(error);
+		}
+	},
+);
 
 export { related };

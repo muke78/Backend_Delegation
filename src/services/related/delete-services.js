@@ -1,8 +1,11 @@
-import { validateFoundToEliminated } from "../../helpers/index.js";
+import {
+	findArchivesId,
+	validateFoundToEliminated,
+} from "../../helpers/index.js";
 import { deleteRelatedModel } from "../../models/index.js";
 import { NotFoundError } from "../../utils/error-utils.js";
 
-export const deleteRelatedService = async (relationId) => {
+export const deleteRelatedService = async (relationId, archiveId) => {
 	const foundArchiveToEliminated = await validateFoundToEliminated(
 		relationId,
 		"related_entries_id",
@@ -10,14 +13,23 @@ export const deleteRelatedService = async (relationId) => {
 		"related_entries",
 	);
 
-	if (foundArchiveToEliminated.length === 0) {
-		throw new NotFoundError("La referencia no fue encontrada");
-	}
+	const findArchive = await findArchivesId(archiveId);
 
-	const deleteArchiveFromID = await deleteRelatedModel(relationId);
+	if (findArchive === undefined)
+		throw new NotFoundError("El archivo no fue encontrado.");
 
-	if (deleteArchiveFromID.affectedRows === 0) {
-		throw new NotFoundError("la referencia no fue encontrada para eliminar");
+	if (foundArchiveToEliminated.length === 0)
+		throw new NotFoundError("La referencia no fue encontrada.");
+
+	if (findArchive.archives_id !== archiveId)
+		throw new NotFoundError(
+			"La referencia no pertenece al archivo especificado.",
+		);
+
+	const deleteRelatedFromID = await deleteRelatedModel(relationId);
+
+	if (deleteRelatedFromID.affectedRows === 0) {
+		throw new NotFoundError("La referencia no fue encontrada para eliminar");
 	}
 
 	return foundArchiveToEliminated[0];

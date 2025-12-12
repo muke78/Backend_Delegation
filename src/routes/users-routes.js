@@ -11,11 +11,11 @@ import { verifyToken } from "../middlewares/verify-jwt-middlewares.js";
 import { validationFields } from "../middlewares/validation-middlewares.js";
 import { methodOK, methodCreated } from "../server/methods-server.js";
 import {
+	multiUuidSchema,
 	schemaCreateUserValidations,
 	schemaListUsersValidations,
 	schemaSearchUserValidations,
 	schemaUpdateUserValidations,
-	uuidSchema,
 } from "../validations/index.js";
 
 const users = express.Router();
@@ -88,7 +88,7 @@ users.post(
 users.put(
 	"/:id",
 	verifyToken,
-	validationFields(uuidSchema, "params"),
+	validationFields(multiUuidSchema(["id"]), "params"),
 	validationFields(schemaUpdateUserValidations, "body"),
 	async (request, response, next) => {
 		try {
@@ -111,7 +111,7 @@ users.put(
 users.delete(
 	"/:id",
 	verifyToken,
-	validationFields(uuidSchema, "params"),
+	validationFields(multiUuidSchema(["id"]), "params"),
 	async (request, response, next) => {
 		try {
 			const userId = request.params.id;

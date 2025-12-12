@@ -13,7 +13,7 @@ export const insertRelatedService = async (
 
 	const findFolio = await findArchivesId(archiveId);
 
-	if (!findFolio)
+	if (findFolio === undefined)
 		throw new NotFoundError(
 			"No se encontró ningun archivo para guardar una referencia",
 		);
