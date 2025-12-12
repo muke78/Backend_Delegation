@@ -4,7 +4,7 @@ const currentYear = new Date().getFullYear();
 
 export const alphaNumericSchema = Joi.string()
 	.trim()
-	.pattern(/^[A-Za-z0-9\s]+$/, "solo letras y números")
+	.pattern(/^[\p{L}0-9\s]+$/u, "solo letras y números")
 	.min(2)
 	.max(100)
 	.messages({

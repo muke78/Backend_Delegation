@@ -160,7 +160,7 @@ archives.put(
 				request,
 				response,
 				result,
-				"El archivo se actualizo correctamente",
+				"El archivo se actualizo correctamente y sus referencias fueron actualizadas",
 			);
 		} catch (error) {
 			next(error);

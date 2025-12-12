@@ -1,5 +1,8 @@
 import { findArchivesId } from "../../helpers/find-archives-by-id.js";
-import { updateArchiveModel } from "../../models/index.js";
+import {
+	updateArchiveModel,
+	updateRelatedEntriesFolio,
+} from "../../models/index.js";
 import {
 	ConflictError,
 	DatabaseError,
@@ -57,7 +60,7 @@ export const updateArchiveService = async (
 
 	// SOLO SI CAMBIA EL FOLIO SE ACTUALIZAN LAS ENTRADAS RELACIONADAS
 	if (folioChanged) {
-		// await updateRelatedEntriesFolio(archiveId, identifier, base_folio);
+		await updateRelatedEntriesFolio(archiveId, findFolio.folio, newFolio);
 	}
 
 	return result.affectedRows > 0;
