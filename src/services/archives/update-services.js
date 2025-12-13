@@ -28,21 +28,26 @@ export const updateArchiveService = async (
 	if (findFolio === undefined)
 		throw new NotFoundError("No se encontro el folio que se quiere editar");
 
-	const folioChanged =
-		identifier !== findFolio.identifier || base_folio !== findFolio.base_folio;
+	const newIdentifier =
+		identifier !== undefined ? identifier : findFolio.identifier;
+	const newBaseFolio =
+		base_folio !== undefined ? base_folio : findFolio.base_folio;
+	const newFolio = `${newIdentifier}${newBaseFolio}`;
 
-	const newFolio = `${identifier}${base_folio}`;
+	const folioChanged = newFolio !== findFolio.folio;
 
-	const existingFolio = await validateFolioService(newFolio);
-
-	if (existingFolio)
-		throw new ConflictError("El folio ya se encuentra registrado");
+	if (folioChanged) {
+		const existingFolio = await validateFolioService(newFolio);
+		if (existingFolio) {
+			throw new ConflictError("El folio ya se encuentra registrado");
+		}
+	}
 
 	const updateData = {
 		archives_id: archiveId,
 		identifier,
 		base_folio,
-		newFolio,
+		newFolio: folioChanged ? newFolio : undefined,
 		name,
 		doc_type,
 		year,

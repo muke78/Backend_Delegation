@@ -111,7 +111,7 @@ export const multiUuidSchema = (keys = []) => {
 
 	for (const key of keys) {
 		shape[key] = Joi.string()
-			.uuid()
+			.uuid({ version: ["uuidv4"] })
 			.required()
 			.messages({
 				"string.uuid": `El campo "${key}" debe ser un UUID válido`,

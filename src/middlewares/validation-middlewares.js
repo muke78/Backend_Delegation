@@ -1,8 +1,11 @@
+import { sanitizedBody } from "../helpers/index.js";
 import { logger } from "../utils/logger-utils.js";
 
 export const validationFields = (schema, property = "body") => {
 	return (request, response, next) => {
 		const { error } = schema.validate(request[property], { abortEarly: false });
+
+		const sanitize = sanitizedBody(request.body);
 
 		if (error) {
 			logger.error({
@@ -13,7 +16,7 @@ export const validationFields = (schema, property = "body") => {
 				details: error.details.message,
 				path: request.originalUrl,
 				method: request.method,
-				body: request.body,
+				body: sanitize,
 				params: request.params,
 				query: request.query,
 				user: request.user?.user_id,

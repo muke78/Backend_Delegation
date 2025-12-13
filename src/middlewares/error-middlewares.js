@@ -1,4 +1,4 @@
-import { generateUUID } from "../helpers/index.js";
+import { generateUUID, sanitizedBody } from "../helpers/index.js";
 import { logger } from "../utils/logger-utils.js";
 import { config } from "../config/config.js";
 
@@ -6,6 +6,8 @@ export const errorHandler = (err, request, response, _next) => {
 	const status = err.statusCode || 500;
 	const timestamp = new Date().toISOString();
 	const errorId = generateUUID();
+
+	const sanitize = sanitizedBody(request.body);
 
 	logger.error({
 		message: err.message || "Se produjo un error inesperado.",
@@ -16,7 +18,7 @@ export const errorHandler = (err, request, response, _next) => {
 		path: request.originalUrl,
 		method: request.method,
 		query: request.query,
-		body: request.body,
+		body: sanitize,
 		params: request.params,
 		user: request.user?.user_id,
 		timestamp,

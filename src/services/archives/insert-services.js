@@ -6,7 +6,6 @@ import { insertArchiveModel } from "../../models/index.js";
 export const insertArchiveService = async ({
 	identifier,
 	base_folio,
-	folio,
 	name,
 	doc_type,
 	year,
