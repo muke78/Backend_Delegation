@@ -12,6 +12,7 @@ import {
 export const schemaListUsersValidations = Joi.object({
 	role: roleSchema.optional(),
 	page: paginationSchema.extract("page"),
+	limit: paginationSchema.extract("limit"),
 });
 
 export const schemaCreateUserValidations = Joi.object({

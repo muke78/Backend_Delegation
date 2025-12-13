@@ -46,9 +46,9 @@ CREATE TABLE related_entries (
     related_entries_id CHAR(36) PRIMARY KEY,
     archive_id CHAR(36) NOT NULL,
     reference_number INT NOT NULL, -- 1, 2, 3...
-    reference_folio VARCHAR(150) NOT NULL, -- PI-DYCCDC2528-01
-    description TEXT,
-    event_date DATE,
+    reference_folio VARCHAR(150) UNIQUE NOT NULL, -- PI-DYCCDC2528-01
+    description TEXT NOT NULL,
+    event_date DATE NOT NULL,
     responsible_person VARCHAR(255),
     responsible_role VARCHAR(150),
     notas TEXT,
