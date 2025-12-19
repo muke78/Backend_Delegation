@@ -47,7 +47,9 @@ app.get("/", (_req, res) => {
 });
 
 // ✅ 4. Rutas de la API (ya con rate limiting aplicado)
-app.use(burstProtectionLimiter, normalLimiter, router);
+// app.use(burstProtectionLimiter, normalLimiter, router);
+
+app.use(router);
 
 // ✅ 5. Middleware de errores
 app.use(errorHandler);
