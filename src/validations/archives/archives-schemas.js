@@ -38,7 +38,7 @@ export const schemaCreateArchivesValidations = Joi.object({
 	base_folio: alphaNumericSchema,
 	name: alphaNumericSchema,
 	doc_type: alphaNumericSchema.optional(),
-	year: yearNumberSchema.optional(),
+	year: yearNumberSchema,
 	storage_path: alphaNumericSchema.optional().empty(""),
 	source_sheet: alphaNumericSchema.optional().empty(""),
 	created_by: uuidSchema,
