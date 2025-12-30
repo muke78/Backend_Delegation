@@ -2,6 +2,9 @@ import Joi from "joi";
 
 const currentYear = new Date().getFullYear();
 
+const UUID_V4_REGEX =
+	/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
 export const alphaNumericSchema = Joi.string()
 	.trim()
 	.pattern(/^[\p{L}0-9\s]+$/u, "solo letras y números")
@@ -113,9 +116,22 @@ export const multiUuidSchema = (keys = []) => {
 		shape[key] = Joi.string()
 			.uuid({ version: ["uuidv4"] })
 			.required()
+			.custom((value, helpers) => {
+				if (!Joi.string().uuid().validate(value).value) {
+					return helpers.error("uuid.invalid");
+				}
+				if (!UUID_V4_REGEX.test(value)) {
+					return helpers.error("uuid.version");
+				}
+
+				return value;
+			})
 			.messages({
-				"string.uuid": `El campo "${key}" debe ser un UUID válido`,
 				"any.required": `El campo "${key}" es obligatorio`,
+				"string.base": `El campo "${key}" debe ser una cadena de texto`,
+				"string.empty": `El campo "${key}" no puede estar vacío`,
+				"uuid.invalid": `El campo "${key}" debe tener un formato UUID válido`,
+				"uuid.version": `El campo "${key}" debe ser un UUID versión 4 (v4)`,
 			});
 	}
 
