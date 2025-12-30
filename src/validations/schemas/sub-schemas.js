@@ -21,13 +21,13 @@ export const alphaNumericSchema = Joi.string()
 
 export const yearSchema = Joi.date()
 	.iso()
-	.min("1900-01-01")
-	.max("2050-01-01")
+	.min(`${MIN_YEAR}-01-01`)
+	.max(`${MAX_YEAR}-01-01`)
 	.messages({
 		"date.base": "La fecha debe ser válida",
 		"date.format": "La fecha debe tener formato ISO (YYYY-MM-DD)",
-		"date.min": "La fecha no puede ser menor al año 1900",
-		"date.max": "La fecha no puede ser mayor al año 2050",
+		"date.min": `La fecha no puede ser menor al año ${MIN_YEAR}`,
+		"date.max": `La fecha no puede ser mayor al año ${MAX_YEAR}`,
 	});
 
 export const yearNumberSchema = Joi.number()
