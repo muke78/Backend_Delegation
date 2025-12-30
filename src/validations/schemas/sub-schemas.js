@@ -1,6 +1,7 @@
 import Joi from "joi";
 
-const currentYear = new Date().getFullYear();
+const MIN_YEAR = 1900;
+const MAX_YEAR = 2050;
 
 const UUID_V4_REGEX =
 	/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
@@ -21,23 +22,23 @@ export const alphaNumericSchema = Joi.string()
 export const yearSchema = Joi.date()
 	.iso()
 	.min("1900-01-01")
-	.max("now")
+	.max("2050-01-01")
 	.messages({
 		"date.base": "La fecha debe ser válida",
 		"date.format": "La fecha debe tener formato ISO (YYYY-MM-DD)",
 		"date.min": "La fecha no puede ser menor al año 1900",
-		"date.max": "La fecha no puede ser mayor al día actual",
+		"date.max": "La fecha no puede ser mayor al año 2050",
 	});
 
 export const yearNumberSchema = Joi.number()
 	.integer()
-	.min(1900)
-	.max(currentYear)
+	.min(MIN_YEAR)
+	.max(MAX_YEAR)
 	.messages({
 		"number.base": "El año debe ser un número",
 		"number.integer": "El año debe ser un número entero",
 		"number.min": "El año no puede ser menor a 1900",
-		"number.max": `La año no puede ser mayor a ${currentYear}`,
+		"number.max": `La año no puede ser mayor a ${MAX_YEAR}`,
 	});
 
 export const nameUserSchema = Joi.string()
