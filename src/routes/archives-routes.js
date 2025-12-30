@@ -15,6 +15,7 @@ import {
 import { validationFields } from "../middlewares/validation-middlewares.js";
 import {
 	multiUuidSchema,
+	paginationSchema,
 	schemaCreateArchivesValidations,
 	schemaFolioValidations,
 	schemaListArchivesValidations,
@@ -28,10 +29,12 @@ archives.get(
 	"/:archiveId/duplex",
 	verifyToken,
 	validationFields(multiUuidSchema(["archiveId"]), "params"),
+	validationFields(paginationSchema, "query"),
 	async (request, response, next) => {
 		try {
 			const archiveId = request.params.archiveId;
-			const result = await GetDuplexArchiveAndRelated(archiveId);
+			const pagination = request.query;
+			const result = await GetDuplexArchiveAndRelated(archiveId, pagination);
 			methodOK(request, response, result);
 		} catch (error) {
 			next(error);

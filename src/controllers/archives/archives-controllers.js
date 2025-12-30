@@ -10,9 +10,9 @@ import {
 	validateFolioService,
 } from "../../services/index.js";
 
-export const GetDuplexArchiveAndRelated = async (archiveId) => {
+export const GetDuplexArchiveAndRelated = async (archiveId, pagination) => {
 	const listGetDuplexArchiveAndRelated =
-		await listDuplexArchiveAndRelatedService(archiveId);
+		await listDuplexArchiveAndRelatedService(archiveId, pagination);
 	return listGetDuplexArchiveAndRelated;
 };
 
