@@ -41,7 +41,6 @@ CREATE TABLE `archives` (
     PRIMARY KEY (`archives_id`),
     UNIQUE KEY `folio` (`folio`),
     KEY `created_by` (`created_by`),
-    KEY `idx_archives_folio` (`folio`),
     CONSTRAINT `archives_ibfk_1` FOREIGN KEY (`created_by`) REFERENCES `users` (`user_id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci
 
@@ -64,19 +63,9 @@ CREATE TABLE `related_entries` (
     PRIMARY KEY (`related_entries_id`),
     UNIQUE KEY `reference_folio` (`reference_folio`),
     KEY `idx_related_archive_id` (`archive_id`),
-    KEY `idx_related_reference_folio` (`reference_folio`),
     KEY `idx_related_archive_refnum` (
         `archive_id`,
         `reference_number`
     ),
     CONSTRAINT `related_entries_ibfk_1` FOREIGN KEY (`archive_id`) REFERENCES `archives` (`archives_id`) ON DELETE CASCADE
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci
-
--- índices
-CREATE INDEX idx_archives_folio ON archives (folio);
-
-CREATE INDEX idx_related_archive_id ON related_entries (archive_id);
-
-CREATE INDEX idx_related_reference_folio ON related_entries (reference_folio);
-
-CREATE INDEX idx_related_archive_refnum ON related_entries (archive_id, reference_number);
