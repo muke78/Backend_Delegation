@@ -36,9 +36,10 @@ export const yearNumberSchema = Joi.number()
 	.max(MAX_YEAR)
 	.messages({
 		"number.base": "El año debe ser un número",
+		"number.empty": "El año no puede estar vacío",
 		"number.integer": "El año debe ser un número entero",
-		"number.min": "El año no puede ser menor a 1900",
-		"number.max": `La año no puede ser mayor a ${MAX_YEAR}`,
+		"number.min": `El año no puede ser menor a ${MIN_YEAR}`,
+		"number.max": `El año no puede ser mayor a ${MAX_YEAR}`,
 	});
 
 export const nameUserSchema = Joi.string()

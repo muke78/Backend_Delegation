@@ -1,4 +1,3 @@
-import { NotFoundError } from "../../utils/error-utils.js";
 import { listRelatedWithArchivesService } from "../related/list-services.js";
 import { listOnlyArchiveService } from "./list-only-services.js";
 
@@ -15,12 +14,6 @@ export const listDuplexArchiveAndRelatedService = async (
 		pagination,
 		{ throwIfEmpty: false },
 	);
-
-	if (!extractRelated.rows?.length) {
-		throw new NotFoundError(
-			`No se encontraron referencias asociadas al archivo con folio ${archive.folio}`,
-		);
-	}
 
 	const buildDuplexData = {
 		archive,
