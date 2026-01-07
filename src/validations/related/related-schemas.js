@@ -7,6 +7,7 @@ import {
 } from "../schemas/sub-schemas.js";
 
 export const schemaListRelatedValidations = Joi.object({
+	reference_folio: alphaNumericSchema.optional().empty(""),
 	description: alphaNumericSchema.optional().empty(""),
 	event_date: yearSchema.optional().empty(""),
 	responsible_person: alphaNumericSchema.optional().empty(""),

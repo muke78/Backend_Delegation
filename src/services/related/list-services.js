@@ -1,40 +1,35 @@
-import { listRelatedWithArchivesModel } from "../../models/index.js";
+import { listGetAllRelatedModel } from "../../models/index.js";
 import { NotFoundError } from "../../utils/error-utils.js";
 
-export const listRelatedWithArchivesService = async (
-	archiveId,
-	{
-		description,
-		event_date,
-		responsible_person,
-		responsible_role,
-		limit = 20,
-		page = 1,
-	},
-	{ throwIfEmpty = true } = {},
-) => {
+export const listGetAllRelatedService = async ({
+	reference_folio,
+	description,
+	event_date,
+	responsible_person,
+	limit = 20,
+	page = 1,
+}) => {
 	const safeLimit = Number(limit) > 0 ? Number(limit) : 20;
 	const safePage = Number(page) > 0 ? Number(page) : 1;
 
-	const result = await listRelatedWithArchivesModel(
-		archiveId,
+	const result = await listGetAllRelatedModel(
+		reference_folio,
 		description,
 		event_date,
 		responsible_person,
-		responsible_role,
 		safeLimit,
 		safePage,
 	);
 
-	if (throwIfEmpty && result.rows.length === 0)
+	if (result.rows.length === 0)
 		throw new NotFoundError(
-			"No se encontraron referencias con los filtros proporcionados",
+			"No se encontraron relaciones con los filtros proporcionados",
 			{
 				details: `${JSON.stringify({
+					reference_folio,
 					description,
 					event_date,
 					responsible_person,
-					responsible_role,
 				})}`,
 			},
 		);

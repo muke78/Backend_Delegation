@@ -1,126 +1,23 @@
 import express from "express";
 import { verifyToken } from "../middlewares/verify-jwt-middlewares.js";
-import { methodCreated, methodOK } from "../server/methods-server.js";
-import {
-	DeleteRelated,
-	GetRelatedSpecify,
-	GetRelatedWithArchives,
-	InsertRelated,
-	UpdateRelated,
-} from "../controllers/index.js";
 import { validationFields } from "../middlewares/validation-middlewares.js";
-import {
-	multiUuidSchema,
-	schemaCreateRelatedValidations,
-	schemaListRelatedValidations,
-	schemaUpdateRelatedValidations,
-} from "../validations/index.js";
+import { schemaListRelatedValidations } from "../validations/index.js";
+import { methodOK } from "../server/methods-server.js";
+import { GetAllRelated } from "../controllers/related/related-controllers.js";
 
-const related = express.Router({ mergeParams: true });
+const related = express.Router();
 
-//  GET api/archives/:archiveId/related/:relationId
-related.get(
-	"/:relationId",
-	verifyToken,
-	validationFields(multiUuidSchema(["archiveId", "relationId"]), "params"),
-	async (request, response, next) => {
-		try {
-			const archiveId = request.params.archiveId;
-			const relationId = request.params.relationId;
-
-			const result = await GetRelatedSpecify(archiveId, relationId);
-			methodOK(request, response, result);
-		} catch (error) {
-			next(error);
-		}
-	},
-);
-
-// GET api/archives/:archiveId/related
+// GET api/related
 related.get(
 	"/",
 	verifyToken,
-	validationFields(multiUuidSchema(["archiveId"]), "params"),
 	validationFields(schemaListRelatedValidations, "query"),
-
 	async (request, response, next) => {
 		try {
-			const archiveId = request.params.archiveId;
 			const listRelated = request.query;
 
-			const result = await GetRelatedWithArchives(archiveId, listRelated);
+			const result = await GetAllRelated(listRelated);
 			methodOK(request, response, result);
-		} catch (error) {
-			next(error);
-		}
-	},
-);
-
-// POST api/archives/:archiveId/related
-related.post(
-	"/",
-	verifyToken,
-	validationFields(multiUuidSchema(["archiveId"]), "params"),
-	validationFields(schemaCreateRelatedValidations, "body"),
-	async (request, response, next) => {
-		try {
-			const archiveId = request.params.archiveId;
-			const insertRelated = request.body;
-
-			const result = await InsertRelated(insertRelated, archiveId);
-			methodCreated(
-				request,
-				response,
-				result,
-				"Se creo correctamente la referencia",
-			);
-		} catch (error) {
-			next(error);
-		}
-	},
-);
-
-// PUT api/archives/:archiveId/related/:relationId
-related.put(
-	"/:relationId",
-	verifyToken,
-	validationFields(multiUuidSchema(["relationId", "archiveId"]), "params"),
-	validationFields(schemaUpdateRelatedValidations, "body"),
-	async (request, response, next) => {
-		try {
-			const archiveId = request.params.archiveId;
-			const relationId = request.params.relationId;
-			const relatedData = request.body;
-
-			const result = await UpdateRelated(relationId, archiveId, relatedData);
-			methodOK(
-				request,
-				response,
-				result,
-				"La referencia se actualizo de forma correcta",
-			);
-		} catch (error) {
-			next(error);
-		}
-	},
-);
-
-// DELETE api/archives/:archiveId/related/:relationId
-related.delete(
-	"/:relationId",
-	verifyToken,
-	validationFields(multiUuidSchema(["relationId", "archiveId"]), "params"),
-	async (request, response, next) => {
-		try {
-			const archiveId = request.params.archiveId;
-			const relationId = request.params.relationId;
-			const result = await DeleteRelated(relationId, archiveId);
-			methodOK(
-				request,
-				response,
-				undefined,
-				`La referencia ${result.description} fue eliminado correctamente`,
-			);
 		} catch (error) {
 			next(error);
 		}
