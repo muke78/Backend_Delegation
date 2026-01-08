@@ -1,5 +1,4 @@
 export * from "./archives/delete-models.js";
-export * from "./archives/duplex-models.js";
 export * from "./archives/insert-models.js";
 export * from "./archives/list-models.js";
 export * from "./archives/list-only-models.js";
@@ -12,9 +11,10 @@ export * from "./auth/register-models.js";
 export * from "./users/delete-models.js";
 export * from "./related/insert-models.js";
 export * from "./related/reference-number-folio-models.js";
+export * from "./related/list-models.js";
 export * from "./related/updated-models.js";
 export * from "./related/list-specify-models.js";
-export * from "./related/list-models.js";
+export * from "./archives/list-relational-duplex-models.js";
 export * from "./related/delete-models.js";
 export * from "./users/insert-models.js";
 export * from "./users/list-models.js";
