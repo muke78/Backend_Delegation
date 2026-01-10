@@ -54,10 +54,10 @@ CREATE TABLE `related_entries` (
     `reference_number` int NOT NULL,
     `reference_folio` varchar(150) NOT NULL,
     `description` text NOT NULL,
-    `event_date` date NOT NULL,
-    `responsible_person` varchar(255) DEFAULT NULL,
+    `event_date` date DEFAULT NULL,
+    `responsible_person` varchar(255) NOT NULL,
     `responsible_role` varchar(150) DEFAULT NULL,
-    `notas` text,
+    `notas` text NULL
     `created` datetime DEFAULT CURRENT_TIMESTAMP,
     `updated` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`related_entries_id`),

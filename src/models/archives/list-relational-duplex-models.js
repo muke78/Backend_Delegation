@@ -40,7 +40,7 @@ export const listRelationalDuplexPluginModel = async (
                     FROM
                         related_entries
                     ${where}
-                    ORDER BY reference_number ASC
+                    ORDER BY reference_number DESC
                     LIMIT ? OFFSET ?;`;
 
 	const rows = await connectionQuery(query, [...values, limit, offset]);

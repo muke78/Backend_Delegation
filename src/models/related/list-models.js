@@ -57,7 +57,7 @@ export const listGetAllRelatedModel = async (
                     FROM
                         related_entries
                     ${where}
-                    ORDER BY reference_number ASC
+                    ORDER BY created DESC
                     LIMIT ? OFFSET ?;`;
 
 	const rows = await connectionQuery(query, [...values, limit, offset]);
