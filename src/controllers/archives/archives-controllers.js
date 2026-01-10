@@ -1,5 +1,6 @@
 import {
 	deleteArchiveService,
+	getArchivesForSelectService,
 	insertArchiveService,
 	listArchiveService,
 	listDuplexArchiveAndRelatedService,
@@ -17,6 +18,10 @@ export const GetDuplexArchiveAndRelated = (archiveId, pagination) => {
 export const SearchOfArchives = async (folio) => {
 	const searchOfArchives = await searchArchiveService(folio);
 	return searchOfArchives;
+};
+
+export const GetArchivesForSelect = async () => {
+	return await getArchivesForSelectService();
 };
 
 export const ValidateFolio = async (folio) => {
