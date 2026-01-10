@@ -57,7 +57,7 @@ CREATE TABLE `related_entries` (
     `event_date` date DEFAULT NULL,
     `responsible_person` varchar(255) NOT NULL,
     `responsible_role` varchar(150) DEFAULT NULL,
-    `notas` text NULL,
+    `notas` varchar(400) DEFAULT NULL,
     `created` datetime DEFAULT CURRENT_TIMESTAMP,
     `updated` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`related_entries_id`),
