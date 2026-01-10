@@ -59,7 +59,7 @@ archives.get(
 	},
 );
 
-// GET /api/archive/select_archive_data
+// GET /api/archive/select
 archives.get("/select", verifyToken, async (request, response, next) => {
 	try {
 		const result = await GetArchivesForSelect();

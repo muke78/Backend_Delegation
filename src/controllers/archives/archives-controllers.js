@@ -20,8 +20,8 @@ export const SearchOfArchives = async (folio) => {
 	return searchOfArchives;
 };
 
-export const GetArchivesForSelect = async () => {
-	return await getArchivesForSelectService();
+export const GetArchivesForSelect = () => {
+	return getArchivesForSelectService();
 };
 
 export const ValidateFolio = async (folio) => {
