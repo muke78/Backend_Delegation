@@ -4,7 +4,7 @@
 		{
 			"label": "use-nvm-version",
 			"type": "shell",
-			"command": "nvm use v22.11.0",
+			"command": "nvm use v22.17.0",
 			"group": {
 				"kind": "build",
 				"isDefault": true

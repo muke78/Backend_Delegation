@@ -43,7 +43,6 @@ export const insertArchiveService = async ({
 	return {
 		identifier,
 		base_folio,
-		folio,
 		name,
 		doc_type,
 		year,

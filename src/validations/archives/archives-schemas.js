@@ -23,10 +23,10 @@ export const schemaFolioValidations = Joi.object({
 });
 
 export const schemaListArchivesValidations = Joi.object({
-	identifier: alphaNumericSchema.optional(),
-	base_folio: alphaNumericSchema.optional(),
-	name: alphaNumericSchema.optional(),
-	doc_type: alphaNumericSchema.optional(),
+	identifier: alphaNumericSchema().optional(),
+	base_folio: alphaNumericSchema().optional(),
+	name: alphaNumericSchema().optional(),
+	doc_type: alphaNumericSchema().optional(),
 	year: yearNumberSchema.optional(),
 	created_by: uuidSchema.optional(),
 	page: paginationSchema.extract("page"),
@@ -34,23 +34,23 @@ export const schemaListArchivesValidations = Joi.object({
 });
 
 export const schemaCreateArchivesValidations = Joi.object({
-	identifier: alphaNumericSchema,
-	base_folio: alphaNumericSchema,
-	name: alphaNumericSchema,
-	doc_type: alphaNumericSchema.optional(),
-	year: yearNumberSchema.optional(),
-	storage_path: alphaNumericSchema.optional().empty(""),
-	source_sheet: alphaNumericSchema.optional().empty(""),
+	identifier: alphaNumericSchema(),
+	base_folio: alphaNumericSchema(),
+	name: alphaNumericSchema(),
+	doc_type: alphaNumericSchema().optional(),
+	year: yearNumberSchema,
+	storage_path: alphaNumericSchema().optional().empty(""),
+	source_sheet: alphaNumericSchema().optional().empty(""),
 	created_by: uuidSchema,
 });
 
 export const schemaUpdateArchiveValidations = Joi.object({
-	identifier: alphaNumericSchema.optional().min(1),
-	base_folio: alphaNumericSchema.optional().min(1),
-	name: alphaNumericSchema.optional(),
-	doc_type: alphaNumericSchema.optional(),
+	identifier: alphaNumericSchema().optional().min(1),
+	base_folio: alphaNumericSchema().optional().min(1),
+	name: alphaNumericSchema().optional(),
+	doc_type: alphaNumericSchema().optional(),
 	year: yearNumberSchema.optional(),
-	storage_path: alphaNumericSchema.optional().empty(""),
-	source_sheet: alphaNumericSchema.optional().empty(""),
+	storage_path: alphaNumericSchema().optional().empty(""),
+	source_sheet: alphaNumericSchema().optional().empty(""),
 	created_by: uuidSchema.optional(),
 });

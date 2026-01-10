@@ -1,9 +1,9 @@
 import {
-	deleteRelatedService,
-	insertRelatedService,
+	listGetAllRelatedService,
 	listRelatedSpecifyService,
-	listRelatedWithArchivesService,
+	insertRelatedService,
 	updateRelatedService,
+	deleteRelatedService,
 } from "../../services/index.js";
 
 export const GetRelatedSpecify = async (archiveId, relationId) => {
@@ -14,12 +14,9 @@ export const GetRelatedSpecify = async (archiveId, relationId) => {
 	return listGetRelatedSpecify;
 };
 
-export const GetRelatedWithArchives = async (archiveId, listRelated) => {
-	const listGetRelatedWithArchives = listRelatedWithArchivesService(
-		archiveId,
-		listRelated,
-	);
-	return listGetRelatedWithArchives;
+export const GetAllRelated = async (listRelated) => {
+	const listGetAllRelated = await listGetAllRelatedService(listRelated);
+	return listGetAllRelated;
 };
 
 export const InsertRelated = async (related, archiveId) => {

@@ -2,66 +2,70 @@
 
 DROP TABLE IF EXISTS users;
 
-CREATE TABLE users (
-    user_id CHAR(36) PRIMARY KEY,
-    username VARCHAR(100) UNIQUE NOT NULL,
-    password_hash VARCHAR(255) NOT NULL,
-    full_name VARCHAR(200),
-    email VARCHAR(200) UNIQUE,
-    role ENUM(
+CREATE TABLE `users` (
+    `user_id` char(36) NOT NULL,
+    `username` varchar(100) NOT NULL,
+    `password_hash` varchar(255) NOT NULL,
+    `full_name` varchar(200) DEFAULT NULL,
+    `email` varchar(200) DEFAULT NULL,
+    `role` enum(
         'Administrador',
         'Capturista',
         'Consultora'
     ) DEFAULT 'Consultora',
-    last_login DATETIME DEFAULT NULL,
-    created DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updated DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-);
+    `last_login` datetime DEFAULT NULL,
+    `created` datetime DEFAULT CURRENT_TIMESTAMP,
+    `updated` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`user_id`),
+    UNIQUE KEY `username` (`username`),
+    UNIQUE KEY `email` (`email`)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci
 
 -- tabla principal: archives
 
 DROP TABLE IF EXISTS archives;
 
-CREATE TABLE archives (
-    archives_id CHAR(36) PRIMARY KEY,
-    identifier VARCHAR(20) NOT NULL, -- PI, CN, OEM, etc.
-    base_folio VARCHAR(50) NOT NULL, -- DYCCDC2528
-    folio VARCHAR(100) UNIQUE NOT NULL, -- PI-DYCCDC2528
-    name VARCHAR(255) NOT NULL,
-    doc_type VARCHAR(100),
-    year INT,
-    storage_path TEXT,
-    source_sheet VARCHAR(100),
-    created_by CHAR(36) NOT NULL,
-    created DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updated DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (created_by) REFERENCES users (user_id)
-);
+CREATE TABLE `archives` (
+    `archives_id` char(36) NOT NULL,
+    `identifier` varchar(20) NOT NULL,
+    `base_folio` varchar(50) NOT NULL,
+    `folio` varchar(100) NOT NULL,
+    `name` varchar(255) NOT NULL,
+    `doc_type` varchar(100) DEFAULT NULL,
+    `year` int NOT NULL,
+    `storage_path` text,
+    `source_sheet` varchar(100) DEFAULT NULL,
+    `created_by` char(36) NOT NULL,
+    `created` datetime DEFAULT CURRENT_TIMESTAMP,
+    `updated` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`archives_id`),
+    UNIQUE KEY `folio` (`folio`),
+    KEY `created_by` (`created_by`),
+    CONSTRAINT `archives_ibfk_1` FOREIGN KEY (`created_by`) REFERENCES `users` (`user_id`)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci
 
 -- tabla related_entries
 
 DROP TABLE IF EXISTS related_entries;
 
-CREATE TABLE related_entries (
-    related_entries_id CHAR(36) PRIMARY KEY,
-    archive_id CHAR(36) NOT NULL,
-    reference_number INT NOT NULL, -- 1, 2, 3...
-    reference_folio VARCHAR(150) UNIQUE NOT NULL, -- PI-DYCCDC2528-01
-    description TEXT NOT NULL,
-    event_date DATE NOT NULL,
-    responsible_person VARCHAR(255),
-    responsible_role VARCHAR(150),
-    notas TEXT,
-    created DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updated DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (archive_id) REFERENCES archives (archives_id) ON DELETE CASCADE
-);
-
--- índices
-CREATE INDEX idx_archives_folio ON archives(folio);
-
-CREATE INDEX idx_related_archive_id ON related_entries(archive_id);
-
-CREATE INDEX idx_related_reference_folio ON related_entries(reference_folio);
-
-CREATE INDEX idx_related_archive_refnum ON related_entries(archive_id, reference_number);
+CREATE TABLE `related_entries` (
+    `related_entries_id` char(36) NOT NULL,
+    `archive_id` char(36) NOT NULL,
+    `reference_number` int NOT NULL,
+    `reference_folio` varchar(150) NOT NULL,
+    `description` text NOT NULL,
+    `event_date` date DEFAULT NULL,
+    `responsible_person` varchar(255) NOT NULL,
+    `responsible_role` varchar(150) DEFAULT NULL,
+    `notas` varchar(400) DEFAULT NULL,
+    `created` datetime DEFAULT CURRENT_TIMESTAMP,
+    `updated` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`related_entries_id`),
+    UNIQUE KEY `reference_folio` (`reference_folio`),
+    KEY `idx_related_archive_id` (`archive_id`),
+    KEY `idx_related_archive_refnum` (
+        `archive_id`,
+        `reference_number`
+    ),
+    CONSTRAINT `related_entries_ibfk_1` FOREIGN KEY (`archive_id`) REFERENCES `archives` (`archives_id`) ON DELETE CASCADE
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci

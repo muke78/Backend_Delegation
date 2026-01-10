@@ -4,11 +4,9 @@ import {
 	connectionQuery,
 } from "../../helpers/index.js";
 
-export const listGetAllRelatedModel = async (
-	reference_folio,
-	description,
-	event_date,
-	responsible_person,
+export const listRelationalDuplexPluginModel = async (
+	archiveId,
+
 	limit,
 	page,
 ) => {
@@ -16,24 +14,9 @@ export const listGetAllRelatedModel = async (
 
 	const values = [];
 
-	if (reference_folio && reference_folio !== "All") {
-		where += " AND reference_folio LIKE ?";
-		values.push(`%${reference_folio}%`);
-	}
-
-	if (description && description !== "All") {
-		where += " AND description LIKE ?";
-		values.push(`%${description}%`);
-	}
-
-	if (event_date && event_date !== "All") {
-		where += " AND event_date = ?";
-		values.push(event_date);
-	}
-
-	if (responsible_person && responsible_person !== "All") {
-		where += " AND responsible_person = ?";
-		values.push(responsible_person);
+	if (archiveId && archiveId !== "All") {
+		where += " AND archive_id = ?";
+		values.push(archiveId);
 	}
 
 	const countQuery = buildCountQuery("related_entries", "", where);
@@ -57,7 +40,7 @@ export const listGetAllRelatedModel = async (
                     FROM
                         related_entries
                     ${where}
-                    ORDER BY created DESC
+                    ORDER BY reference_number DESC
                     LIMIT ? OFFSET ?;`;
 
 	const rows = await connectionQuery(query, [...values, limit, offset]);
