@@ -16,7 +16,7 @@ export const alphaNumericSchema = (max = 100) =>
 			"string.base": "El campo debe ser un texto",
 			"string.empty": "El campo no puede estar vacío",
 			"string.pattern.name":
-				"El campo solo puede contener letras y números y algunos caracteres",
+				"El campo solo puede contener letras, números y los siguientes caracteres: - ( ) , . : ; \n",
 			"string.min": "El campo es demasiado corto",
 			"string.max": "El campo es demasiado largo",
 		});

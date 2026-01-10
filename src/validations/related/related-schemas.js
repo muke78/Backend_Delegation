@@ -18,7 +18,7 @@ export const schemaListRelatedValidations = Joi.object({
 
 export const schemaCreateRelatedValidations = Joi.object({
 	archive_id: uuidSchema,
-	description: alphaNumericSchema(),
+	description: alphaNumericSchema(150),
 	event_date: yearSchema.optional().empty("").default(null),
 	responsible_person: alphaNumericSchema(),
 	responsible_role: alphaNumericSchema().optional().empty(""),
@@ -26,7 +26,7 @@ export const schemaCreateRelatedValidations = Joi.object({
 });
 
 export const schemaUpdateRelatedValidations = Joi.object({
-	description: alphaNumericSchema().optional().empty(""),
+	description: alphaNumericSchema(150).optional().empty(""),
 	event_date: yearSchema.optional().empty("").default(null),
 	responsible_person: alphaNumericSchema().optional().empty(""),
 	responsible_role: alphaNumericSchema().optional().empty(""),
