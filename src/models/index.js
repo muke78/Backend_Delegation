@@ -3,6 +3,7 @@ export * from "./archives/insert-models.js";
 export * from "./archives/list-models.js";
 export * from "./archives/list-only-models.js";
 export * from "./archives/regenerate-models.js";
+export * from "./archives/list-select-models.js";
 export * from "./archives/search-models.js";
 export * from "./archives/update-models.js";
 export * from "./archives/update-related-entries-folio.models.js";

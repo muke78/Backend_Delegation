@@ -4,6 +4,7 @@ import { methodOK, methodCreated } from "../server/methods-server.js";
 import {
 	DeleteArchive,
 	GetAllArchives,
+	GetArchivesForSelect,
 	GetDuplexArchiveAndRelated,
 	GetOnlyArchive,
 	InsertArchives,
@@ -57,6 +58,16 @@ archives.get(
 		}
 	},
 );
+
+// GET /api/archive/select
+archives.get("/select", verifyToken, async (request, response, next) => {
+	try {
+		const result = await GetArchivesForSelect();
+		methodOK(request, response, result);
+	} catch (error) {
+		next(error);
+	}
+});
 
 // GET /api/archive/validate-folio
 archives.get(

@@ -3,6 +3,7 @@ export * from "./archives/duplex-services.js";
 export * from "./archives/insert-services.js";
 export * from "./archives/list-only-services.js";
 export * from "./archives/list-services.js";
+export * from "./archives/list-select-services.js";
 export * from "./archives/regenerate-services.js";
 export * from "./archives/search-services.js";
 export * from "./archives/update-services.js";
