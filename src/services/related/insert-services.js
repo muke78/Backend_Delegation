@@ -29,7 +29,7 @@ export const insertRelatedService = async (
 		nextNumber,
 		newFolio,
 		description,
-		event_date,
+		event_date || null,
 		responsible_person,
 		responsible_role,
 		notas,

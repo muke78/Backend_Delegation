@@ -6,23 +6,26 @@ const MAX_YEAR = 2050;
 const UUID_V4_REGEX =
 	/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
-export const alphaNumericSchema = Joi.string()
-	.trim()
-	.pattern(/^[\p{L}0-9\s]+$/u, "solo letras y números")
-	.min(2)
-	.max(100)
-	.messages({
-		"string.base": "El campo debe ser un texto",
-		"string.empty": "El campo no puede estar vacío",
-		"string.pattern.name": "El campo solo puede contener letras y números",
-		"string.min": "El campo es demasiado corto",
-		"string.max": "El campo es demasiado largo",
-	});
+export const alphaNumericSchema = (max = 100) =>
+	Joi.string()
+		.trim()
+		.pattern(/^[\p{L}0-9\s\-(),.:;\n]+$/u, "Texto es valido")
+		.min(2)
+		.max(max)
+		.messages({
+			"string.base": "El campo debe ser un texto",
+			"string.empty": "El campo no puede estar vacío",
+			"string.pattern.name":
+				"El campo solo puede contener letras, números y los siguientes caracteres: - ( ) , . : ; \n",
+			"string.min": "El campo es demasiado corto",
+			"string.max": "El campo es demasiado largo",
+		});
 
 export const yearSchema = Joi.date()
 	.iso()
 	.min(`${MIN_YEAR}-01-01`)
 	.max(`${MAX_YEAR}-01-01`)
+	.allow(null)
 	.messages({
 		"date.base": "La fecha debe ser válida",
 		"date.format": "La fecha debe tener formato ISO (YYYY-MM-DD)",
