@@ -23,7 +23,7 @@ export const SearchOfUsers = async (email) => {
 	return searchOfUsers;
 };
 
-export const GetUserForSelect = () => {
+export const GetUserForSelect = async () => {
 	return getUserForSelectService();
 };
 
