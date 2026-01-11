@@ -19,5 +19,6 @@ export * from "./related/delete-services.js";
 export * from "./users/insert-services.js";
 export * from "./users/list-services.js";
 export * from "./users/profile-services.js";
+export * from "./users/list-select-services.js";
 export * from "./users/search-services.js";
 export * from "./users/update-services.js";

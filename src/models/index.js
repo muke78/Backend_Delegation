@@ -21,4 +21,5 @@ export * from "./users/insert-models.js";
 export * from "./users/list-models.js";
 export * from "./users/profile_models.js";
 export * from "./users/search-models.js";
+export * from "./users/list-select-models.js";
 export * from "./users/update-models.js";
