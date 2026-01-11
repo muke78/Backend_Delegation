@@ -46,6 +46,7 @@ export const listGetAllRelatedModel = async (
                         related_entries_id,
                         archive_id,
                         reference_number,
+						LPAD(reference_number, 2, '0') AS reference_formatted,
                         reference_folio,
                         description,
                         event_date,

@@ -41,8 +41,6 @@ export const insertRelatedService = async (
 		);
 };
 
-const generateReferenceFolio = (archive, number) => {
-	const formattedNumber = number < 10 ? `0${number}` : `${number}`;
-
-	return `${archive.identifier}${archive.base_folio}${formattedNumber}`;
+const generateReferenceFolio = (archive, number, digits = 2) => {
+	return `${archive.identifier}${archive.base_folio}${String(number).padStart(digits, "0")}`;
 };

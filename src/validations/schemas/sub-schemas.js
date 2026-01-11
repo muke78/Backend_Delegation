@@ -3,9 +3,6 @@ import Joi from "joi";
 const MIN_YEAR = 1900;
 const MAX_YEAR = 2050;
 
-const UUID_V4_REGEX =
-	/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-
 export const alphaNumericSchema = (max = 100) =>
 	Joi.string()
 		.trim()
@@ -17,8 +14,8 @@ export const alphaNumericSchema = (max = 100) =>
 			"string.empty": "El campo no puede estar vacío",
 			"string.pattern.name":
 				"El campo solo puede contener letras, números y los siguientes caracteres: - ( ) , . : ; \n",
-			"string.min": "El campo es demasiado corto",
-			"string.max": "El campo es demasiado largo",
+			"string.min": "El campo es demasiado corto, ingresa mas de 2 caracteres",
+			"string.max": `El campo es demasiado largo, solo se permite ${max} caracteres`,
 		});
 
 export const yearSchema = Joi.date()
@@ -119,24 +116,13 @@ export const multiUuidSchema = (keys = []) => {
 
 	for (const key of keys) {
 		shape[key] = Joi.string()
-			.uuid({ version: ["uuidv4"] })
+			.uuid({ version: "uuidv4" })
 			.required()
-			.custom((value, helpers) => {
-				if (!Joi.string().uuid().validate(value).value) {
-					return helpers.error("uuid.invalid");
-				}
-				if (!UUID_V4_REGEX.test(value)) {
-					return helpers.error("uuid.version");
-				}
-
-				return value;
-			})
 			.messages({
 				"any.required": `El campo "${key}" es obligatorio`,
 				"string.base": `El campo "${key}" debe ser una cadena de texto`,
 				"string.empty": `El campo "${key}" no puede estar vacío`,
-				"uuid.invalid": `El campo "${key}" debe tener un formato UUID válido`,
-				"uuid.version": `El campo "${key}" debe ser un UUID versión 4 (v4)`,
+				"string.guid": `El campo "${key}" debe ser un UUID v4 válido`,
 			});
 	}
 

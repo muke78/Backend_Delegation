@@ -4,7 +4,6 @@ import {
 	alphaNumericSchema,
 	yearSchema,
 	paginationSchema,
-	uuidSchema,
 } from "../schemas/sub-schemas.js";
 
 export const schemaListRelatedValidations = Joi.object({
@@ -17,7 +16,6 @@ export const schemaListRelatedValidations = Joi.object({
 });
 
 export const schemaCreateRelatedValidations = Joi.object({
-	archive_id: uuidSchema,
 	description: alphaNumericSchema(150),
 	event_date: yearSchema.optional().empty("").default(null),
 	responsible_person: alphaNumericSchema(),

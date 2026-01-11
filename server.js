@@ -47,7 +47,10 @@ app.get("/", (_req, res) => {
 });
 
 // ✅ 4. Rutas de la API (ya con rate limiting aplicado)
-// app.use(burstProtectionLimiter, normalLimiter, router);
+if (config.nodeEnv === "production") {
+	app.use(`${config.api.basePath}/auth`, burstProtectionLimiter);
+	app.use(`${config.api.basePath}`, normalLimiter);
+}
 
 app.use(router);
 
