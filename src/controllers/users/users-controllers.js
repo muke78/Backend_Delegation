@@ -1,5 +1,6 @@
 import {
 	deleteUserService,
+	getUserForSelectService,
 	insertUserService,
 	listProfileService,
 	listUsersService,
@@ -20,6 +21,10 @@ export const GetProfile = async (user_id) => {
 export const SearchOfUsers = async (email) => {
 	const searchOfUsers = await searchUserService(email);
 	return searchOfUsers;
+};
+
+export const GetUserForSelect = () => {
+	return getUserForSelectService();
 };
 
 export const InsertUsers = async (user) => {

@@ -3,6 +3,7 @@ import {
 	DeleteUser,
 	GetAllUsers,
 	GetProfile,
+	GetUserForSelect,
 	InsertUsers,
 	SearchOfUsers,
 	UpdateUser,
@@ -57,6 +58,16 @@ users.get("/profile", verifyToken, async (request, response, next) => {
 	try {
 		const { user_id } = request.user;
 		const result = await GetProfile(user_id);
+		methodOK(request, response, result);
+	} catch (error) {
+		next(error);
+	}
+});
+
+// GET /api/users/select
+users.get("/select", verifyToken, async (request, response, next) => {
+	try {
+		const result = await GetUserForSelect();
 		methodOK(request, response, result);
 	} catch (error) {
 		next(error);
