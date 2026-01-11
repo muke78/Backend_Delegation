@@ -7,6 +7,6 @@ export const getArchivesForSelectModel = () => {
         CONCAT(identifier, ' - ', name) AS label
     FROM
         archives
-    ORDER BY identifier ASC`;
+    ORDER BY created DESC`;
 	return connectionQuery(query, []);
 };
